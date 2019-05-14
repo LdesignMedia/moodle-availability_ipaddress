@@ -33,7 +33,6 @@ M.availability_ipaddress.v6 = '((?:[0-9a-fA-F]{1,4}:){7}(?:[0-9a-fA-F]{1,4}|:)|(
     ':(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\\.(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}|' +
     '(?::[0-9a-fA-F]{1,4}){1,7}|:)))(%[0-9a-zA-Z]{1,})?';
 
-console.log(M.availability_ipaddress.v6);
 /**
  * @class M.availability_ipaddress.form
  * @extends M.core_availability.plugin
@@ -46,7 +45,7 @@ M.availability_ipaddress.form = Y.Object(M.core_availability.plugin);
  * @method initInner
  * @param {Array} param Array of objects
  */
-M.availability_ipaddress.form.initInner = function(params) {
+M.availability_ipaddress.form.initInner = function() {
     "use strict";
     console.log('M.availability_ipaddress');
 };
@@ -62,6 +61,7 @@ M.availability_ipaddress.form.getValue = function(field, node) {
     "use strict";
     // Get field value.
     var value = node.one('input[name=' + field + ']').get('value');
+    console.log('ip_address:', value);
 
     // If it is not a valid positive number, return false.
     if (M.availability_ipaddress.validate_ipaddress(value)) {
@@ -157,7 +157,6 @@ M.availability_ipaddress.form.fillErrors = function(errors, node) {
     "use strict";
     var value = {};
     this.fillValue(value, node);
-    console.log('ip_address:', value);
 
     // Basic ipaddresses checks.
     if (M.availability_ipaddress.validate_ipaddress(value.ipaddresses) === false) {

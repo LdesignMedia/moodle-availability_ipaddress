@@ -48,16 +48,11 @@ class condition extends \core_availability\condition {
      * condition constructor.
      *
      * @param $structure
-     *
-     * @throws \coding_exception
      */
     public function __construct($structure) {
-
         if (isset($structure->ipaddresses)) {
             // set a number
             $this->ipaddresses = $structure->ipaddresses;
-        } else {
-            throw new \coding_exception('Missing or invalid ->ipaddresses for ipaddress condition');
         }
     }
 
@@ -91,7 +86,7 @@ class condition extends \core_availability\condition {
             return true;
         }
 
-        // Check if ip-address matches
+        // Check if ip-address matches.
         if (address_in_subnet(getremoteaddr(), trim($this->ipaddresses))) {
             return true;
         }
