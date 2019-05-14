@@ -40,7 +40,13 @@ class frontend extends \core_availability\frontend {
      * @return array
      */
     protected function get_javascript_strings() {
-        return ['requires_app', 'requires_notapp', 'label_access'];
+        return [
+            'js:ipaddress',
+            'js:turn-on-timestamps',
+            'js:turn-off-timestamps',
+            'js:enabled',
+            'error_ipaddress',
+        ];
     }
 
     /**

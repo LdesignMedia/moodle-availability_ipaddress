@@ -1,3 +1,5 @@
+YUI.add('moodle-availability_ipaddress-form', function (Y, NAME) {
+
 /**
  * Availability ip-address YUI code
  *
@@ -88,7 +90,7 @@ M.availability_ipaddress.form.getNode = function(json) {
     html = '';
     html += '<span class="availability-group"><label for="' + id + '"><span class="p-r-1">' +
         M.util.get_string('title', 'availability_ipaddress') + ' </span></label>';
-    html += '<input type="text" placeholder="192.168.178.1,231.54.211.0/20,231.3.56.211" name="ip_addresses" id="' + id + '">';
+    html += '<input type="text" placeholder="192.168.,231.54.211.0/20,231.3.56.211" name="ip_addresses" id="' + id + '">';
     node = Y.Node.create('<span class="form-inline">' + html + '</span>');
 
     // Set initial values, if specified.
@@ -162,3 +164,5 @@ M.availability_ipaddress.form.fillErrors = function(errors, node) {
         errors.push('availability_ipaddress:error_ipaddress');
     }
 };
+
+}, '@VERSION@', {"requires": ["base", "node", "event", "moodle-core_availability-form"]});

@@ -45,6 +45,23 @@ class condition extends \core_availability\condition {
     protected $ip_addresses = '';
 
     /**
+     * condition constructor.
+     *
+     * @param $structure
+     *
+     * @throws \coding_exception
+     */
+    public function __construct($structure) {
+
+        if (isset($structure->ip_addresses)) {
+            // set a number
+            $this->ip_addresses = $structure->ip_addresses;
+        } else {
+            throw new \coding_exception('Missing or invalid ->ip_addresses for ipaddress condition');
+        }
+    }
+
+    /**
      * Determines whether a particular item is currently available
      * according to this availability condition.
      *
@@ -69,10 +86,15 @@ class condition extends \core_availability\condition {
      * @return bool True if available
      */
     public function is_available($not, info $info, $grabthelot, $userid) {
-        // Check if the setting is enabled.
+
+        if (empty($this->ip_addresses)) {
+            return true;
+        }
 
         // Check if ip-address matches
-
+        if (address_in_subnet(getremoteaddr(), trim($this->ip_addresses))) {
+            return true;
+        }
 
         return false;
     }
@@ -113,7 +135,43 @@ class condition extends \core_availability\condition {
      * @return string Text representation of parameters
      */
     protected function get_debug_string() {
-        // TODO: Implement get_debug_string() method.
+        return !empty($this->ip_addresses) ? 'ip_addresses ON' : 'ip_addresses OFF';
+    }
+
+    /**
+     * Returns a JSON object which corresponds to a condition of this type.
+     *
+     * Intended for unit testing, as normally the JSON values are constructed
+     * by JavaScript code.
+     *
+     * @param string $ip_addresses
+     *
+     * @return \stdClass Object representing condition
+     */
+    public static function get_json($ip_addresses) {
+        return (object)[
+            'type' => 'ipaddress',
+            'ip_addresses' => $ip_addresses,
+        ];
+    }
+
+    /**
+     * Check if ip-address is valid
+     *
+     * @param $ip_addresses
+     *
+     * @return bool
+     */
+    public static function is_valid_ip_addresses($ip_addresses) {
+        $ip_addresses = implode(',', $ip_addresses);
+        foreach ($ip_addresses as $ip_address) {
+            if (!filter_var($ip_address, FILTER_VALIDATE_IP)) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
     /**
@@ -122,6 +180,11 @@ class condition extends \core_availability\condition {
      * @return \stdClass Structure object (ready to be made into JSON format)
      */
     public function save() {
-        // TODO: Implement save() method.
+
+
+        return (object)[
+            'type' => 'ipaddress',
+            'ip_addresses' => $this->ip_addresses,
+        ];
     }
 }
