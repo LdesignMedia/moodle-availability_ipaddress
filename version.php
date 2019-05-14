@@ -15,12 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
+ * Version information
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @package   moodle-availability_ipaddress
+ * @package   availability_ipaddress
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
- 
+
+defined('MOODLE_INTERNAL') || die();
+
+$plugin->component = 'availability_ipaddress';
+$plugin->version = 2019051400;
+$plugin->release = 'v3.5.0';
+$plugin->requires = 2018120300;
+$plugin->maturity = MATURITY_BETA;

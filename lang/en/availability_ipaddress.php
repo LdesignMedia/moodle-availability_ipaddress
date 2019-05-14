@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
+ * EN language file.
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
@@ -23,4 +23,6 @@
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
- 
+$string['pluginname'] = 'IP address';
+$string['title'] = 'IP address';
+$string['description'] = 'Restrict access by ip-address';
