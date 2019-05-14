@@ -1,0 +1,10 @@
+{
+  "name": "moodle-availability_ipaddress-form",
+  "builds": {
+    "moodle-availability_ipaddress-form": {
+      "jsfiles": [
+        "form.js"
+      ]
+    }
+  }
+}
