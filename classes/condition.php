@@ -51,7 +51,6 @@ class condition extends \core_availability\condition {
      */
     public function __construct($structure) {
         if (isset($structure->ipaddresses)) {
-            // set a number
             $this->ipaddresses = $structure->ipaddresses;
         }
     }
@@ -159,8 +158,8 @@ class condition extends \core_availability\condition {
      */
     public static function is_valid_ipaddresses($ipaddresses) {
         $ipaddresses = implode(',', $ipaddresses);
-        foreach ($ipaddresses as $ip_address) {
-            if (!filter_var($ip_address, FILTER_VALIDATE_IP)) {
+        foreach ($ipaddresses as $ipaddress) {
+            if (!filter_var($ipaddress, FILTER_VALIDATE_IP)) {
                 return false;
             }
         }
