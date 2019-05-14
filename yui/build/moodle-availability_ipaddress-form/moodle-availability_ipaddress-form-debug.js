@@ -83,19 +83,19 @@ M.availability_ipaddress.form.getNode = function(json) {
     var html, node, root, id;
 
     // Make sure we work with unique id.
-    id = 'ip_addresses' + M.availability_ipaddress.form.instId;
+    id = 'ipaddresses' + M.availability_ipaddress.form.instId;
     M.availability_ipaddress.form.instId += 1;
 
     // Create HTML structure.
     html = '';
     html += '<span class="availability-group"><label for="' + id + '"><span class="p-r-1">' +
         M.util.get_string('title', 'availability_ipaddress') + ' </span></label>';
-    html += '<input type="text" placeholder="192.168.,231.54.211.0/20,231.3.56.211" name="ip_addresses" id="' + id + '">';
+    html += '<input type="text" placeholder="192.168.178.1,231.54.211.0/20,231.3.56.211" name="ipaddresses" id="' + id + '">';
     node = Y.Node.create('<span class="form-inline">' + html + '</span>');
 
     // Set initial values, if specified.
-    if (json.ip_addresses !== undefined) {
-        node.one('input[name=ip_addresses]').set('value', json.ip_addresses);
+    if (json.ipaddresses !== undefined) {
+        node.one('input[name=ipaddresses]').set('value', json.ipaddresses);
     }
 
     // Add event handlers (first time only).
@@ -105,7 +105,7 @@ M.availability_ipaddress.form.getNode = function(json) {
         root.delegate('valuechange', function() {
             // Trigger the updating of the hidden availability data whenever the ipaddress field changes.
             M.core_availability.form.update();
-        }, '.availability_ipaddress input[name=ip_addresses]');
+        }, '.availability_ipaddress input[name=ipaddresses]');
     }
 
     return node;
@@ -150,7 +150,7 @@ M.availability_ipaddress.form.fillValue = function(value, node) {
     // to use within the JSON data in the form. Should be compatible
     // with the structure used in the __construct and save functions
     // within condition.php.
-    value.ip_addresses = this.getValue('ip_addresses', node);
+    value.ipaddresses = this.getValue('ipaddresses', node);
 };
 
 M.availability_ipaddress.form.fillErrors = function(errors, node) {
@@ -159,8 +159,8 @@ M.availability_ipaddress.form.fillErrors = function(errors, node) {
     this.fillValue(value, node);
     console.log('ip_address:', value);
 
-    // Basic ip_addresses checks.
-    if (M.availability_ipaddress.validate_ipaddress(value.ip_addresses) === false) {
+    // Basic ipaddresses checks.
+    if (M.availability_ipaddress.validate_ipaddress(value.ipaddresses) === false) {
         errors.push('availability_ipaddress:error_ipaddress');
     }
 };
