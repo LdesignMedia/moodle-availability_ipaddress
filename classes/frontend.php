@@ -42,9 +42,6 @@ class frontend extends \core_availability\frontend {
     protected function get_javascript_strings() {
         return [
             'js:ipaddress',
-            'js:turn-on-timestamps',
-            'js:turn-off-timestamps',
-            'js:enabled',
             'error_ipaddress',
         ];
     }

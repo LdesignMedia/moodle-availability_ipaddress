@@ -30,11 +30,6 @@ $string['require_condition'] = 'Matching ip-address/subnet';
 
 // Javascript strings.
 $string['js:ipaddress'] = 'Require network address';
-$string['js:turn-on-timestamps'] = '';
-$string['js:turn-off-timestamps'] = '';
-$string['js:enabled'] = '';
 
 // Errors.
 $string['error_ipaddress'] = 'Incorrect ip-address/subnet format';
-
-$string['requiresubnet_help'] = 'Access may be restricted to particular subnets on the LAN or Internet by specifying a comma-separated list of partial or full IP address numbers. This can be useful for an invigilated (proctored) quiz, to ensure that only people in a certain location can access the quiz.';

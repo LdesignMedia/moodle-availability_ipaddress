@@ -42,7 +42,7 @@ class condition extends \core_availability\condition {
     /**
      * @var string
      */
-    protected $ip_addresses = '';
+    protected $ipaddresses = '';
 
     /**
      * condition constructor.
@@ -53,11 +53,11 @@ class condition extends \core_availability\condition {
      */
     public function __construct($structure) {
 
-        if (isset($structure->ip_addresses)) {
+        if (isset($structure->ipaddresses)) {
             // set a number
-            $this->ip_addresses = $structure->ip_addresses;
+            $this->ipaddresses = $structure->ipaddresses;
         } else {
-            throw new \coding_exception('Missing or invalid ->ip_addresses for ipaddress condition');
+            throw new \coding_exception('Missing or invalid ->ipaddresses for ipaddress condition');
         }
     }
 
@@ -87,12 +87,12 @@ class condition extends \core_availability\condition {
      */
     public function is_available($not, info $info, $grabthelot, $userid) {
 
-        if (empty($this->ip_addresses)) {
+        if (empty($this->ipaddresses)) {
             return true;
         }
 
         // Check if ip-address matches
-        if (address_in_subnet(getremoteaddr(), trim($this->ip_addresses))) {
+        if (address_in_subnet(getremoteaddr(), trim($this->ipaddresses))) {
             return true;
         }
 
@@ -135,7 +135,7 @@ class condition extends \core_availability\condition {
      * @return string Text representation of parameters
      */
     protected function get_debug_string() {
-        return !empty($this->ip_addresses) ? 'ip_addresses ON' : 'ip_addresses OFF';
+        return !empty($this->ipaddresses) ? 'ipaddresses ON' : 'ipaddresses OFF';
     }
 
     /**
@@ -144,27 +144,27 @@ class condition extends \core_availability\condition {
      * Intended for unit testing, as normally the JSON values are constructed
      * by JavaScript code.
      *
-     * @param string $ip_addresses
+     * @param string $ipaddresses
      *
      * @return \stdClass Object representing condition
      */
-    public static function get_json($ip_addresses) {
+    public static function get_json($ipaddresses) {
         return (object)[
             'type' => 'ipaddress',
-            'ip_addresses' => $ip_addresses,
+            'ipaddresses' => $ipaddresses,
         ];
     }
 
     /**
      * Check if ip-address is valid
      *
-     * @param $ip_addresses
+     * @param $ipaddresses
      *
      * @return bool
      */
-    public static function is_valid_ip_addresses($ip_addresses) {
-        $ip_addresses = implode(',', $ip_addresses);
-        foreach ($ip_addresses as $ip_address) {
+    public static function is_valid_ipaddresses($ipaddresses) {
+        $ipaddresses = implode(',', $ipaddresses);
+        foreach ($ipaddresses as $ip_address) {
             if (!filter_var($ip_address, FILTER_VALIDATE_IP)) {
                 return false;
             }
@@ -180,11 +180,9 @@ class condition extends \core_availability\condition {
      * @return \stdClass Structure object (ready to be made into JSON format)
      */
     public function save() {
-
-
         return (object)[
             'type' => 'ipaddress',
-            'ip_addresses' => $this->ip_addresses,
+            'ipaddresses' => $this->ipaddresses,
         ];
     }
 }
