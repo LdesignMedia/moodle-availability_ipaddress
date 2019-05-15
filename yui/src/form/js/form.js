@@ -53,6 +53,8 @@ M.availability_ipaddress.form.initInner = function() {
  * dot or comma).
  *
  * @method getValue
+ * @param {string} field
+ * @param {object} node
  * @return {Number|String} Value of field as number or string if not valid
  */
 M.availability_ipaddress.form.getValue = function(field, node) {
@@ -62,7 +64,7 @@ M.availability_ipaddress.form.getValue = function(field, node) {
     Y.log('ip_address:', value);
 
     // If it is not a valid positive number, return false.
-    if (M.availability_ipaddress.validate_ipaddress(value)) {
+    if (M.availability_ipaddress.validateIpaddress(value)) {
         Y.log('Valid ip-address');
         return value;
     }
@@ -72,8 +74,9 @@ M.availability_ipaddress.form.getValue = function(field, node) {
 };
 
 /**
- * getNode
- * @param json
+ * Get node
+ *
+ * @param {object} json
  * @returns {*}
  */
 M.availability_ipaddress.form.getNode = function(json) {
@@ -110,12 +113,12 @@ M.availability_ipaddress.form.getNode = function(json) {
 };
 
 /**
- * validate_ipaddress
+ * Validate ipaddresses
  *
  * @param {string[]} ipaddresses
  * @returns {boolean}
  */
-M.availability_ipaddress.validate_ipaddress = function(ipaddresses) {
+M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     'use strict';
 
     ipaddresses = ipaddresses.split(',');
@@ -157,7 +160,7 @@ M.availability_ipaddress.form.fillErrors = function(errors, node) {
     this.fillValue(value, node);
 
     // Basic ipaddresses checks.
-    if (M.availability_ipaddress.validate_ipaddress(value.ipaddresses) === false) {
+    if (M.availability_ipaddress.validateIpaddress(value.ipaddresses) === false) {
         errors.push('availability_ipaddress:error_ipaddress');
     }
 };
