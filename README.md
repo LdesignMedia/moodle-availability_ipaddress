@@ -10,10 +10,6 @@ Restrict access to any activity by ip-address. Most activities don't support thi
 
 [![Build Status](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress.svg?branch=master)](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress)
 
-## Description
-
-You can select configure this availability condition by any activity. Multiple ip-addresses can be added.  
-
 ## List of features
 - Supports comma separate list of ip-addresses
 - Subnet support, eg 192.168.1.0/24
