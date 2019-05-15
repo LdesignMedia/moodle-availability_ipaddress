@@ -45,7 +45,7 @@ M.availability_ipaddress.form = Y.Object(M.core_availability.plugin);
  */
 M.availability_ipaddress.form.initInner = function() {
     "use strict";
-    console.log('M.availability_ipaddress');
+    Y.log('M.availability_ipaddress');
 };
 
 /**
@@ -59,15 +59,15 @@ M.availability_ipaddress.form.getValue = function(field, node) {
     "use strict";
     // Get field value.
     var value = node.one('input[name=' + field + ']').get('value');
-    console.log('ip_address:', value);
+    Y.log('ip_address:', value);
 
     // If it is not a valid positive number, return false.
     if (M.availability_ipaddress.validate_ipaddress(value)) {
-        console.log('Valid ip-address');
+        Y.log('Valid ip-address');
         return value;
     }
 
-    console.log('getValue failed:', value);
+    Y.log('getValue failed:', value);
     return value;
 };
 
@@ -134,11 +134,11 @@ M.availability_ipaddress.validate_ipaddress = function(ipaddresses) {
             continue;
         }
 
-        console.error('Incorrect ip', ipaddresses[i]);
+        Y.log('Incorrect ip', ipaddresses[i]);
         return false;
     }
 
-    console.log('Valid ipaddresses', ipaddresses);
+    Y.log('Valid ipaddresses', ipaddresses);
     return true;
 };
 
