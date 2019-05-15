@@ -37,6 +37,8 @@ defined('MOODLE_INTERNAL') || die;
 class frontend extends \core_availability\frontend {
 
     /**
+     * get_javascript_strings
+     *
      * @return array
      */
     protected function get_javascript_strings() {

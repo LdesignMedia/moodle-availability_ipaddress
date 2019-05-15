@@ -47,7 +47,7 @@ class condition extends \core_availability\condition {
     /**
      * condition constructor.
      *
-     * @param $structure
+     * @param \stdClass $structure
      */
     public function __construct($structure) {
         if (isset($structure->ipaddresses)) {
@@ -152,7 +152,7 @@ class condition extends \core_availability\condition {
     /**
      * Check if ip-address is valid
      *
-     * @param $ipaddresses
+     * @param string $ipaddresses
      *
      * @return bool
      */
