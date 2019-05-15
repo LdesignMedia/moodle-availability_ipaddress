@@ -5,7 +5,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  */
-
+/*eslint no-console: "error"*/
 /**
  * JavaScript for form editing grade conditions.
  *
