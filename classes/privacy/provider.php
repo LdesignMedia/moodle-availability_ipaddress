@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * EN language file.
+ * Privacy Subsystem implementation for availability_ipaddress.
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
@@ -23,16 +23,26 @@
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
-$string['pluginname'] = 'IP address';
-$string['title'] = 'IP address';
-$string['description'] = 'Restrict access by ip-address or subnet';
-$string['require_condition'] = 'Matching ip-address/subnet';
 
-// Javascript strings.
-$string['js:ipaddress'] = 'Require network address';
+namespace availability_ipaddress\privacy;
 
-// Errors.
-$string['error_ipaddress'] = 'Incorrect ip-address/subnet format';
+defined('MOODLE_INTERNAL') || die();
 
-// Privacy provider.
-$string['privacy:metadata'] = 'The restriction by activity ipaddress plugin does not store any personal data.';
+/**
+ * Privacy Subsystem for availability_ipaddress implementing null_provider.
+ *
+ * @copyright  2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}
