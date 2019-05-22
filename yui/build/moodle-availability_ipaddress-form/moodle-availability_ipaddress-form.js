@@ -122,6 +122,7 @@ M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     for (var i in ipaddresses) {
 
         // Test normal ip format.
+        // Strict ipv4 check.
         if (new RegExp(/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm)
             .test(ipaddresses[i])) {
             continue;
