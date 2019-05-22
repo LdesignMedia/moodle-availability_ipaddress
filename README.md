@@ -10,6 +10,8 @@ Restrict access to any activity by ip-address. Most activities don't support thi
 
 [![Build Status](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress.svg?branch=master)](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress)
 
+![Screenshot](https://moodle.org/pluginfile.php/50/local_plugins/plugin_screenshots/2292/2019-05-15_11-01-39.png)
+
 ## List of features
 - Supports comma separate list of ip-addresses
 - Subnet support, eg 192.168.1.0/24
