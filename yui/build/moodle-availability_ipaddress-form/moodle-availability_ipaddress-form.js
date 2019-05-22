@@ -118,12 +118,16 @@ M.availability_ipaddress.form.getNode = function(json) {
  */
 M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     'use strict';
-
     ipaddresses = ipaddresses.split(',');
     for (var i in ipaddresses) {
 
         // Test normal ip format.
-        if (new RegExp("(?:".concat(M.availability_ipaddress.v4, ")|(?:").concat(M.availability_ipaddress.v6, ")"), "g")
+        if (new RegExp(/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm)
+            .test(ipaddresses[i])) {
+            continue;
+        }
+
+        if (new RegExp(M.availability_ipaddress.v6)
             .test(ipaddresses[i])) {
             continue;
         }
@@ -141,6 +145,12 @@ M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     return true;
 };
 
+/**
+ * FillValue
+ *
+ * @param {object} value
+ * @param {object} node
+ */
 M.availability_ipaddress.form.fillValue = function(value, node) {
     // This function gets passed the node (from above) and a value
     // object. Within that object, it must set up the correct values
@@ -150,6 +160,11 @@ M.availability_ipaddress.form.fillValue = function(value, node) {
     value.ipaddresses = this.getValue('ipaddresses', node);
 };
 
+/**
+ * FillErrors
+ * @param {object} errors
+ * @param {object} node
+ */
 M.availability_ipaddress.form.fillErrors = function(errors, node) {
     "use strict";
     var value = {};

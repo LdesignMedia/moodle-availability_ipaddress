@@ -61,7 +61,7 @@ M.availability_ipaddress.form.getValue = function(field, node) {
     "use strict";
     // Get field value.
     var value = node.one('input[name=' + field + ']').get('value');
-    Y.log('ip_address:', value);
+    Y.log('ip_address:' + value);
 
     // If it is not a valid positive number, return false.
     if (M.availability_ipaddress.validateIpaddress(value)) {
@@ -69,7 +69,6 @@ M.availability_ipaddress.form.getValue = function(field, node) {
         return value;
     }
 
-    Y.log('getValue failed:', value);
     return value;
 };
 
@@ -120,13 +119,21 @@ M.availability_ipaddress.form.getNode = function(json) {
  */
 M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     'use strict';
-
+    Y.log(ipaddresses);
     ipaddresses = ipaddresses.split(',');
     for (var i in ipaddresses) {
 
         // Test normal ip format.
-        if (new RegExp("(?:".concat(M.availability_ipaddress.v4, ")|(?:").concat(M.availability_ipaddress.v6, ")"), "g")
+        // Strict ipv4 check.
+        if (new RegExp(/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm)
             .test(ipaddresses[i])) {
+            Y.log('Correct ipv4');
+            continue;
+        }
+
+        if (new RegExp(M.availability_ipaddress.v6)
+            .test(ipaddresses[i])) {
+            Y.log('Correct ipv6');
             continue;
         }
 
@@ -134,17 +141,24 @@ M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
         if (new RegExp("(?:".concat(M.availability_ipaddress.v4 + "\\/(3[0-2]|[12]?[0-9])", ")|(?:")
             .concat(M.availability_ipaddress.v6 + "\\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])", ")"), "g")
             .test(ipaddresses[i])) {
+            Y.log('Correct subnet');
             continue;
         }
 
-        Y.log('Incorrect ip', ipaddresses[i]);
+        Y.log('Incorrect ip');
         return false;
     }
 
-    Y.log('Valid ipaddresses', ipaddresses);
+    Y.log('Valid ipaddresses');
     return true;
 };
 
+/**
+ * FillValue
+ *
+ * @param {object} value
+ * @param {object} node
+ */
 M.availability_ipaddress.form.fillValue = function(value, node) {
     // This function gets passed the node (from above) and a value
     // object. Within that object, it must set up the correct values
@@ -154,6 +168,11 @@ M.availability_ipaddress.form.fillValue = function(value, node) {
     value.ipaddresses = this.getValue('ipaddresses', node);
 };
 
+/**
+ * FillErrors
+ * @param {object} errors
+ * @param {object} node
+ */
 M.availability_ipaddress.form.fillErrors = function(errors, node) {
     "use strict";
     var value = {};

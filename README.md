@@ -22,6 +22,9 @@ Restrict access to any activity by ip-address. Most activities don't support thi
 3.  Go to Site Administrator > Notification
 4.  Install the plugin
 
+## TODO 
+- Behat tests ip validation
+
 ## Security
 
 If you discover any security related issues, please email [luuk@MFreak.nl](mailto:luuk@MFreak.nl) instead of using the issue tracker.
