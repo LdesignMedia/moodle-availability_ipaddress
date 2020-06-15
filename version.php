@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'availability_ipaddress';
-$plugin->version = 2019111400;
-$plugin->release = '3.8.0';
+$plugin->version = 2020061500;
+$plugin->release = '3.9.0';
 $plugin->requires = 2016120500;
 $plugin->maturity = MATURITY_BETA;
