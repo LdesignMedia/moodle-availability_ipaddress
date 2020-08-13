@@ -25,6 +25,16 @@ Restrict access to any activity by ip-address. This plugin can be used to make a
 3.  Go to Site Administrator > Notification
 4.  Install the plugin
 
+
+## Usage
+
+1. Add or edit an activity in a Moodle course.
+2. Go to the section "Restrict access"
+3. Click IP address in the modal
+4. There's a new input field that supports a list of comma separated ip address e.g. 127.0.0.1, 192.168.1.0/24
+   1. The users with matching ip addresses can view the activity.
+5. Save the activity
+
 ## TODO 
 - Behat tests ip validation
 
