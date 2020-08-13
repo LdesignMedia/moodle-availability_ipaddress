@@ -1,5 +1,6 @@
 ## Moodle - availability ip address plugin
-Restrict access to any activity by ip-address. Most activities don't support this feature. 
+Restrict access to any activity by ip-address. This plugin can be used to make any chosen activity unavailable based on the user's IP.
+
 
 ## Author
 ![MFreak.nl](http://MFreak.nl/logo_small.png)
