@@ -79,7 +79,7 @@ class condition extends \core_availability\condition {
      *
      * @return bool True if available
      */
-    public function is_available($not, info $info, $grabthelot, $userid) {
+    public function is_available($not, info $info, $grabthelot, $userid) : bool {
 
         if (empty($this->ipaddresses)) {
             return true;
@@ -118,7 +118,7 @@ class condition extends \core_availability\condition {
      *   this item
      * @throws \coding_exception
      */
-    public function get_description($full, $not, info $info) {
+    public function get_description($full, $not, info $info) : string {
         return get_string('require_condition', 'availability_ipaddress');
     }
 
@@ -128,7 +128,7 @@ class condition extends \core_availability\condition {
      *
      * @return string Text representation of parameters
      */
-    protected function get_debug_string() {
+    protected function get_debug_string() : string {
         return !empty($this->ipaddresses) ? 'ipaddresses ON' : 'ipaddresses OFF';
     }
 
@@ -142,7 +142,7 @@ class condition extends \core_availability\condition {
      *
      * @return \stdClass Object representing condition
      */
-    public static function get_json($ipaddresses) {
+    public static function get_json($ipaddresses) : \stdClass {
         return (object)[
             'type' => 'ipaddress',
             'ipaddresses' => $ipaddresses,
@@ -156,7 +156,7 @@ class condition extends \core_availability\condition {
      *
      * @return bool
      */
-    public static function is_valid_ipaddresses($ipaddresses) {
+    public static function is_valid_ipaddresses($ipaddresses) : bool {
         $ipaddresses = implode(',', $ipaddresses);
         foreach ($ipaddresses as $ipaddress) {
             if (!filter_var($ipaddress, FILTER_VALIDATE_IP)) {
@@ -173,7 +173,7 @@ class condition extends \core_availability\condition {
      *
      * @return \stdClass Structure object (ready to be made into JSON format)
      */
-    public function save() {
+    public function save() : \stdClass {
         return (object)[
             'type' => 'ipaddress',
             'ipaddresses' => $this->ipaddresses,
