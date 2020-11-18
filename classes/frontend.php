@@ -41,24 +41,10 @@ class frontend extends \core_availability\frontend {
      *
      * @return array
      */
-    protected function get_javascript_strings() {
+    protected function get_javascript_strings() : array {
         return [
             'js:ipaddress',
             'error_ipaddress',
         ];
-    }
-
-    /**
-     * Decides whether this plugin should be available in a given course. The
-     * plugin can do this depending on course or system settings.
-     *
-     * @param \stdClass     $course  Course object
-     * @param \cm_info      $cm      Course-module currently being edited (null if none)
-     * @param \section_info $section Section currently being edited (null if none)
-     *
-     * @return bool True if there are completion criteria
-     */
-    protected function allow_add($course, \cm_info $cm = null, \section_info $section = null) {
-        return true;
     }
 }

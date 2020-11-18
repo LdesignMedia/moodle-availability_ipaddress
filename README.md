@@ -5,10 +5,17 @@ Restrict access to any activity by ip-address. Most activities don't support thi
 ![MFreak.nl](http://MFreak.nl/logo_small.png)
 
 * Author: Luuk Verhoeven, [MFreak.nl](https://MFreak.nl/)
-* Min. required: Moodle 3.2.x
-* Supports PHP: 7.0 | 7.1 
+* Min. required: Moodle 3.5.x
+* Supports PHP: 7.2
 
 [![Build Status](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress.svg?branch=master)](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress)
+![Moodle35](https://img.shields.io/badge/moodle-3.5-brightgreen.svg)
+![Moodle36](https://img.shields.io/badge/moodle-3.6-brightgreen.svg)
+![Moodle37](https://img.shields.io/badge/moodle-3.7-brightgreen.svg)
+![Moodle38](https://img.shields.io/badge/moodle-3.8-brightgreen.svg)
+![Moodle39](https://img.shields.io/badge/moodle-3.9-brightgreen.svg)
+![Moodle310](https://img.shields.io/badge/moodle-3.10-brightgreen.svg)
+![PHP7.2](https://img.shields.io/badge/PHP-7.2-brightgreen.svg)
 
 ![Screenshot](https://moodle.org/pluginfile.php/50/local_plugins/plugin_screenshots/2292/2019-05-15_11-01-39.png)
 
