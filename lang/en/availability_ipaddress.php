@@ -26,7 +26,7 @@
 $string['pluginname'] = 'IP address';
 $string['title'] = 'IP address';
 $string['description'] = 'Restrict access by ip-address or subnet';
-$string['require_condition'] = 'Matching ip-address/subnet';
+$string['require_condition'] = 'Matching ip-address/subnet. (Your IP:{$a})';
 
 // Javascript strings.
 $string['js:ipaddress'] = 'Require network address';
