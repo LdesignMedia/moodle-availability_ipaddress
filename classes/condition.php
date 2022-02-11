@@ -166,7 +166,7 @@ class condition extends \core_availability\condition {
             }
         }
 
-       return true;
+        return true;
 
     }
 
