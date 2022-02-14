@@ -56,3 +56,7 @@ The GNU GENERAL PUBLIC LICENSE. Please see [License File](LICENSE) for more info
 ## Contributing
 
 Contributions are welcome and will be fully credited. We accept contributions via Pull Requests on Github.
+
+## Changelog
+
+- 2022021100 Thanks for adding ip-range support @[juacas](https://github.com/juacas)
