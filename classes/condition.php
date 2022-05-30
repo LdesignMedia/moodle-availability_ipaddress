@@ -82,15 +82,15 @@ class condition extends \core_availability\condition {
     public function is_available($not, info $info, $grabthelot, $userid) : bool {
 
         if (empty($this->ipaddresses)) {
-            return true;
+            return !$not;
         }
 
         // Check if ip-address matches.
         if (address_in_subnet(getremoteaddr(), trim($this->ipaddresses))) {
-            return true;
+            return !$not;
         }
 
-        return false;
+        return $not;
     }
 
     /**
