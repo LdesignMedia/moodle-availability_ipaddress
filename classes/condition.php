@@ -28,8 +28,6 @@ namespace availability_ipaddress;
 
 use core_availability\info;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Class condition
  *

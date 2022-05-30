@@ -26,8 +26,6 @@
 
 namespace availability_ipaddress\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for availability_ipaddress implementing null_provider.
  *
