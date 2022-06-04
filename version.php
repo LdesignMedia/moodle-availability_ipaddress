@@ -28,6 +28,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'availability_ipaddress';
 $plugin->version = 2022052801;
-$plugin->release = '3.11.0';
+$plugin->release = '3.11.2';
 $plugin->requires = 2016120500;
 $plugin->maturity = MATURITY_STABLE;
