@@ -16,9 +16,9 @@ Restrict access to any activity by ip-address. This plugin can be used to make a
 ![Moodle38](https://img.shields.io/badge/moodle-3.8-brightgreen.svg)
 ![Moodle39](https://img.shields.io/badge/moodle-3.9-brightgreen.svg)
 ![Moodle310](https://img.shields.io/badge/moodle-3.10-brightgreen.svg)
+![Moodle40](https://img.shields.io/badge/moodle-4.00-brightgreen.svg)
 ![PHP7.2](https://img.shields.io/badge/PHP-7.2-brightgreen.svg)
-
-![Screenshot](https://moodle.org/pluginfile.php/50/local_plugins/plugin_screenshots/2292/2019-05-15_11-01-39.png)
+![PHP7.3](https://img.shields.io/badge/PHP-7.3-brightgreen.svg)
 
 ## List of features
 - Supports comma separate list of ip-addresses
@@ -56,3 +56,9 @@ The GNU GENERAL PUBLIC LICENSE. Please see [License File](LICENSE) for more info
 ## Contributing
 
 Contributions are welcome and will be fully credited. We accept contributions via Pull Requests on Github.
+
+## Changelog
+
+- 2022021100 Thanks for adding ip-range support @[juacas](https://github.com/juacas)
+- 2022052800 Fixed the [issue 6](https://github.com/MFreakNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
+- 2022052801 Test in Moodle 4.0 @[hamzatamyachte](https://github.com/hamzatamyachte)

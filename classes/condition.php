@@ -28,8 +28,6 @@ namespace availability_ipaddress;
 
 use core_availability\info;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Class condition
  *
@@ -82,15 +80,15 @@ class condition extends \core_availability\condition {
     public function is_available($not, info $info, $grabthelot, $userid) : bool {
 
         if (empty($this->ipaddresses)) {
-            return true;
+            return !$not;
         }
 
         // Check if ip-address matches.
         if (address_in_subnet(getremoteaddr(), trim($this->ipaddresses))) {
-            return true;
+            return !$not;
         }
 
-        return false;
+        return $not;
     }
 
     /**
@@ -119,7 +117,7 @@ class condition extends \core_availability\condition {
      * @throws \coding_exception
      */
     public function get_description($full, $not, info $info) : string {
-        return get_string('require_condition', 'availability_ipaddress');
+        return get_string('require_condition', 'availability_ipaddress', getremoteaddr());
     }
 
     /**
@@ -159,7 +157,9 @@ class condition extends \core_availability\condition {
     public static function is_valid_ipaddresses($ipaddresses) : bool {
         $ipaddresses = implode(',', $ipaddresses);
         foreach ($ipaddresses as $ipaddress) {
-            if (!filter_var($ipaddress, FILTER_VALIDATE_IP)) {
+            if ( is_ip_address($ipaddress) === false &&
+                    is_ipv4_range($ipaddress) === false &&
+                    is_ipv6_range($ipaddress) === false  ) {
                 return false;
             }
         }

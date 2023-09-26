@@ -25,7 +25,6 @@
  **/
 
 namespace availability_ipaddress;
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Class frontend
