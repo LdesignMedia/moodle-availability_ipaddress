@@ -128,11 +128,19 @@ M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
             Y.log('Correct ipv4');
             continue;
         }
-        if (new RegExp(/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}-([0-1]?[0-9]?[0-9]?|2[0-4][0-9]|25[0-5]){1}$/gm)
-        .test(ipaddresses[i])) {
-        Y.log('Correct ipv4 range.');
-        continue;
+
+        var ipv4Regex = new RegExp(
+            '^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)' +
+            '(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}-' +
+            '([0-1]?[0-9]?[0-9]?|2[0-4][0-9]|25[0-5]){1}$',
+            'gm'
+        );
+
+        if (ipv4Regex.test(ipaddresses[i])) {
+            Y.log('Correct ipv4 range.');
+            continue;
         }
+
         if (new RegExp(M.availability_ipaddress.v6)
             .test(ipaddresses[i])) {
             Y.log('Correct ipv6');
