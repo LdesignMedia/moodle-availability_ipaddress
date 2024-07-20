@@ -13,6 +13,6 @@ jobs:
       # Grunt fails due to CSS styling, when needing an !important statement.
       disable_grunt: false
       disable_phpunit: true
-      disable_release : true
+      disable_release : false
       release_branches: main
       min_php : 7.4
