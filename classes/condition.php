@@ -40,7 +40,7 @@ class condition extends \core_availability\condition {
     /**
      * @var string
      */
-    protected $ipaddresses = '';
+    protected string $ipaddresses = '';
 
     /**
      * condition constructor.
@@ -73,11 +73,11 @@ class condition extends \core_availability\condition {
      * @param bool $grabthelot Performance hint: if true, caches information
      *                         required for all course-modules, to make the front page and similar
      *                         pages work more quickly (works only for current user)
-     * @param int  $userid     User ID to check availability for
+     * @param int $userid      User ID to check availability for
      *
      * @return bool True if available
      */
-    public function is_available($not, info $info, $grabthelot, $userid) : bool {
+    public function is_available($not, info $info, $grabthelot, $userid): bool {
 
         if (empty($this->ipaddresses)) {
             return !$not;
@@ -116,7 +116,7 @@ class condition extends \core_availability\condition {
      *   this item
      * @throws \coding_exception
      */
-    public function get_description($full, $not, info $info) : string {
+    public function get_description($full, $not, info $info): string {
         return get_string('require_condition', 'availability_ipaddress', getremoteaddr());
     }
 
@@ -126,7 +126,7 @@ class condition extends \core_availability\condition {
      *
      * @return string Text representation of parameters
      */
-    protected function get_debug_string() : string {
+    protected function get_debug_string(): string {
         return !empty($this->ipaddresses) ? 'ipaddresses ON' : 'ipaddresses OFF';
     }
 
@@ -140,32 +140,11 @@ class condition extends \core_availability\condition {
      *
      * @return \stdClass Object representing condition
      */
-    public static function get_json($ipaddresses) : \stdClass {
-        return (object)[
+    public static function get_json(string $ipaddresses): \stdClass {
+        return (object) [
             'type' => 'ipaddress',
             'ipaddresses' => $ipaddresses,
         ];
-    }
-
-    /**
-     * Check if ip-address is valid
-     *
-     * @param string $ipaddresses
-     *
-     * @return bool
-     */
-    public static function is_valid_ipaddresses($ipaddresses) : bool {
-        $ipaddresses = implode(',', $ipaddresses);
-        foreach ($ipaddresses as $ipaddress) {
-            if ( is_ip_address($ipaddress) === false &&
-                    is_ipv4_range($ipaddress) === false &&
-                    is_ipv6_range($ipaddress) === false  ) {
-                return false;
-            }
-        }
-
-        return true;
-
     }
 
     /**
@@ -173,10 +152,11 @@ class condition extends \core_availability\condition {
      *
      * @return \stdClass Structure object (ready to be made into JSON format)
      */
-    public function save() : \stdClass {
-        return (object)[
+    public function save(): \stdClass {
+        return (object) [
             'type' => 'ipaddress',
             'ipaddresses' => $this->ipaddresses,
         ];
     }
+
 }

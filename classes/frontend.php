@@ -40,10 +40,11 @@ class frontend extends \core_availability\frontend {
      *
      * @return array
      */
-    protected function get_javascript_strings() : array {
+    protected function get_javascript_strings(): array {
         return [
             'js:ipaddress',
             'error_ipaddress',
         ];
     }
+
 }

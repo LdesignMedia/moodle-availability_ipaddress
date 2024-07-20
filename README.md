@@ -1,24 +1,23 @@
 ## Moodle - availability ip address plugin
-Restrict access to any activity by ip-address. This plugin can be used to make any chosen activity unavailable based on the user's IP.
-
+Enhance activity security by restricting access based on IP address. This plugin allows you to control the availability of any chosen
+activity, making it accessible only to users from specified IP addresses.
 
 ## Author
-![MFreak.nl](http://MFreak.nl/logo_small.png)
+![ldesignmedia.nl](http://ldesignmedia.nl/logo_small.png)
 
-* Author: Luuk Verhoeven, [MFreak.nl](https://MFreak.nl/)
-* Min. required: Moodle 3.5.x
-* Supports PHP: 7.2
+* Author: Luuk Verhoeven, [ldesignmedia.nl](https://ldesignmedia.nl/)
+* Min. required: Moodle 4.0
+* Supports PHP: 7.4
 
-[![Build Status](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress.svg?branch=master)](https://travis-ci.org/MFreakNL/moodle-availability_ipaddress)
-![Moodle35](https://img.shields.io/badge/moodle-3.5-brightgreen.svg)
-![Moodle36](https://img.shields.io/badge/moodle-3.6-brightgreen.svg)
-![Moodle37](https://img.shields.io/badge/moodle-3.7-brightgreen.svg)
-![Moodle38](https://img.shields.io/badge/moodle-3.8-brightgreen.svg)
-![Moodle39](https://img.shields.io/badge/moodle-3.9-brightgreen.svg)
-![Moodle310](https://img.shields.io/badge/moodle-3.10-brightgreen.svg)
-![Moodle40](https://img.shields.io/badge/moodle-4.00-brightgreen.svg)
-![PHP7.2](https://img.shields.io/badge/PHP-7.2-brightgreen.svg)
-![PHP7.3](https://img.shields.io/badge/PHP-7.3-brightgreen.svg)
+![Moodle400](https://img.shields.io/badge/moodle-4.0-brightgreen.svg?logo=moodle)
+![Moodle401](https://img.shields.io/badge/moodle-4.1-brightgreen.svg?logo=moodle)
+![Moodle402](https://img.shields.io/badge/moodle-4.2-brightgreen.svg?logo=moodle)
+![Moodle403](https://img.shields.io/badge/moodle-4.3-brightgreen.svg?logo=moodle)
+![Moodle404](https://img.shields.io/badge/moodle-4.4-brightgreen.svg?logo=moodle)
+
+![PHP7.4](https://img.shields.io/badge/PHP-7.4-brightgreen.svg?logo=php)
+![PHP8.0](https://img.shields.io/badge/PHP-8.0-brightgreen.svg?logo=php)
+![PHP8.1](https://img.shields.io/badge/PHP-8.1-brightgreen.svg?logo=php)
 
 ## List of features
 - Supports comma separate list of ip-addresses
@@ -31,7 +30,6 @@ Restrict access to any activity by ip-address. This plugin can be used to make a
 2.  Login as administrator
 3.  Go to Site Administrator > Notification
 4.  Install the plugin
-
 
 ## Usage
 
@@ -47,7 +45,7 @@ Restrict access to any activity by ip-address. This plugin can be used to make a
 
 ## Security
 
-If you discover any security related issues, please email [luuk@MFreak.nl](mailto:luuk@MFreak.nl) instead of using the issue tracker.
+If you discover any security related issues, please email [luuk@ldesignmedia.nl](mailto:luuk@ldesignmedia.nl) instead of using the issue tracker.
 
 ## License
 
@@ -59,6 +57,7 @@ Contributions are welcome and will be fully credited. We accept contributions vi
 
 ## Changelog
 
+- 2024072000 Tested on Moodle 4.4
 - 2022021100 Thanks for adding ip-range support @[juacas](https://github.com/juacas)
-- 2022052800 Fixed the [issue 6](https://github.com/MFreakNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
+- 2022052800 Fixed the [issue 6](https://github.com/ldesignmediaNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
 - 2022052801 Test in Moodle 4.0 @[hamzatamyachte](https://github.com/hamzatamyachte)
