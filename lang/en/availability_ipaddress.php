@@ -23,16 +23,17 @@
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
-$string['pluginname'] = 'IP address';
-$string['title'] = 'IP address';
-$string['description'] = 'Restrict access by ip-address or subnet';
-$string['require_condition'] = 'Matching ip-address/subnet. (Your IP:{$a})';
 
-// Javascript strings.
-$string['js:ipaddress'] = 'Require network address';
+$string['pluginname'] = 'IP address';
+$string['description'] = 'Restrict access by ip-address or subnet';
+$string['title'] = 'IP address';
+$string['require_condition'] = 'Matching ip-address/subnet. (Your IP:{$a})';
 
 // Errors.
 $string['error_ipaddress'] = 'Incorrect ip-address/subnet format';
+
+// Javascript strings.
+$string['js:ipaddress'] = 'Require network address';
 
 // Privacy provider.
 $string['privacy:metadata'] = 'The restriction by activity ipaddress plugin does not store any personal data.';
