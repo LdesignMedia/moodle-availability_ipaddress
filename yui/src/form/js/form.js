@@ -74,7 +74,7 @@ M.availability_ipaddress.form = Y.Object(M.core_availability.plugin);
  */
 M.availability_ipaddress.form.initInner = function() {
     "use strict";
-    Y.log('M.availability_ipaddress 1.2');
+    Y.log('M.availability_ipaddress 1.2', 'moodle-availability_ipaddress-form');
 };
 
 /**
@@ -90,11 +90,11 @@ M.availability_ipaddress.form.getValue = function(field, node) {
     "use strict";
     // Get field value.
     var value = node.one('input[name=' + field + ']').get('value');
-    Y.log('ip_address:' + value);
+    Y.log('ip_address:' + value, 'moodle-availability_ipaddress-form');
 
     // If it is not a valid positive number, return false.
     if (M.availability_ipaddress.validateIpaddress(value)) {
-        Y.log('Valid ip-address');
+        Y.log('Valid ip-address', 'moodle-availability_ipaddress-form');
         return value;
     }
 
@@ -162,30 +162,30 @@ M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
         var ip = ipaddresses[i];
 
         if (new RegExp(M.availability_ipaddress.ipv4Regex).test(ip)) {
-            Y.log('Correct IPv4: ' + ip);
+            Y.log('Correct IPv4: ' + ip, 'moodle-availability_ipaddress-form');
             continue;
         }
 
         if (new RegExp(M.availability_ipaddress.ipv4RangeRegex).test(ip)) {
-            Y.log('Correct IPv4 range: ' + ip);
+            Y.log('Correct IPv4 range: ' + ip, 'moodle-availability_ipaddress-form');
             continue;
         }
 
         if (new RegExp(M.availability_ipaddress.ipv6Regex).test(ip)) {
-            Y.log('Correct IPv6: ' + ip);
+            Y.log('Correct IPv6: ' + ip, 'moodle-availability_ipaddress-form');
             continue;
         }
 
         if (subnetRegex.test(ip)) {
-            Y.log('Correct subnet: ' + ip);
+            Y.log('Correct subnet: ' + ip, 'moodle-availability_ipaddress-form');
             continue;
         }
 
-        Y.log('Incorrect IP: ' + ip);
+        Y.log('Incorrect IP: ' + ip, 'moodle-availability_ipaddress-form');
         return false;
     }
 
-    Y.log('All IP addresses are valid');
+    Y.log('All IP addresses are valid', 'moodle-availability_ipaddress-form');
     return true;
 };
 

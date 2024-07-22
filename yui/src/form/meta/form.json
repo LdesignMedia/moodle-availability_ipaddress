@@ -2,8 +2,8 @@
   "moodle-availability_ipaddress-form": {
     "requires": [
       "base",
-      "node",
       "event",
+      "node",
       "moodle-core_availability-form"
     ]
   }
