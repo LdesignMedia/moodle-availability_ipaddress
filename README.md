@@ -40,8 +40,12 @@ activity, making it accessible only to users from specified IP addresses.
    1. The users with matching ip addresses can view the activity.
 5. Save the activity
 
-## TODO 
-- Behat tests ip validation
+## Testing
+
+Example of valid ip-addresses:
+```txt
+192.168.1.1,192.2.1.1-255,255.255.255.255,127.0.0.1,10.0.0.1,8.8.8.8,2001:0db8:85a3:0000:0000:8a2e:0370:7334,2001:db8::8a2e:370:7334,::1,::ffff:192.168.1.1,fe80::1ff:fe23:4567:890a
+```
 
 ## Security
 

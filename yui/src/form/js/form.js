@@ -1,3 +1,18 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Availability ip-address YUI code
  *
@@ -17,6 +32,7 @@ M.availability_ipaddress = M.availability_ipaddress || {};
 // Advanced ip-address regex for validating.
 M.availability_ipaddress.v4 = '(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\\.(?:25[0-5]|2[0-4][0-9]|1[0-9]' +
     '[0-9]|[1-9][0-9]|[0-9])){3}';
+
 M.availability_ipaddress.v6 = "^((?:[a-fA-F\\d]{1,4}:){7}(?:[a-fA-F\\d]{1,4}|:)|(?:[a-fA-F\\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]" +
     "\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}|:[a-fA-F\\d]{1,4}|:)|(?:[a-fA-F\\d]{1,4}:){5}" +
     "(?::(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}|(:[a-fA-F\\d]{1,4})" +
@@ -29,6 +45,22 @@ M.availability_ipaddress.v6 = "^((?:[a-fA-F\\d]{1,4}:){7}(?:[a-fA-F\\d]{1,4}|:)|
     "((?::[a-fA-F\\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}" +
     "|(?::[a-fA-F\\d]{1,4}){1,7}|:)))(%[0-9a-zA-Z]{1,})?";
 
+M.availability_ipaddress.ipv4Regex = "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$";
+M.availability_ipaddress.ipv4RangeRegex = "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}-"
+    + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
+
+M.availability_ipaddress.ipv6Regex =
+    "^(([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:)|([0-9A-Fa-f]{1,4}:){6}(:|[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4][0-9]|"
+    + "[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|([0-9A-Fa-f]{1,4}:){5}((:[0-9A-Fa-f]{1,4}){1,2}|:|((:[0-9A-"
+    + "Fa-f]{1,4})?:((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))|([0-9A-Fa-f]{1,4}:){4}(("
+    + ":[0-9A-Fa-f]{1,4}){1,3}|(:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-"
+    + "9][0-9]?))|([0-9A-Fa-f]{1,4}:){3}((:[0-9A-Fa-f]{1,4}){1,4}|(:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
+    + "\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|([0-9A-Fa-f]{1,4}:){2}((:[0-9A-Fa-f]{1,4}){1,5}|(:[0-9A-Fa-f]{1,4}){0,4}:((2"
+    + "5[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|([0-9A-Fa-f]{1,4}:){1}((:[0-9A-Fa-f]{1,4}"
+    + "){1,6}|(:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|:((:[0"
+    + "-9A-Fa-f]{1,4}){1,7}|(:[0-9A-Fa-f]{1,4}){0,6}:((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]["
+    + "0-9]?)))(%.+)?$";
+
 /**
  * @class M.availability_ipaddress.form
  * @extends M.core_availability.plugin
@@ -39,11 +71,10 @@ M.availability_ipaddress.form = Y.Object(M.core_availability.plugin);
  * Initialises this plugin.
  *
  * @method initInner
- * @param {Array} param Array of objects
  */
 M.availability_ipaddress.form.initInner = function() {
     "use strict";
-    Y.log('M.availability_ipaddress 1.10');
+    Y.log('M.availability_ipaddress 1.2');
 };
 
 /**
@@ -117,49 +148,44 @@ M.availability_ipaddress.form.getNode = function(json) {
  */
 M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     'use strict';
-    Y.log(ipaddresses);
+
     ipaddresses = ipaddresses.split(',');
-    for (var i in ipaddresses) {
 
-        // Test normal ip format.
-        // Strict ipv4 check.
-        if (new RegExp(/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm)
-            .test(ipaddresses[i])) {
-            Y.log('Correct ipv4');
+    // Define regex patterns for IPv4, IPv4 range, IPv6, and subnets
+
+    var subnetRegex = new RegExp(
+        "^(?:" + M.availability_ipaddress.v4 + "\\/(3[0-2]|[12]?[0-9])|(1\\*))|"
+        + "(?:" + M.availability_ipaddress.v6 + "\\/(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$"
+    );
+
+    for (var i = 0; i < ipaddresses.length; i++) {
+        var ip = ipaddresses[i];
+
+        if (new RegExp(M.availability_ipaddress.ipv4Regex).test(ip)) {
+            Y.log('Correct IPv4: ' + ip);
             continue;
         }
 
-        var ipv4Regex = new RegExp(
-            '^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)' +
-            '(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}-' +
-            '([0-1]?[0-9]?[0-9]?|2[0-4][0-9]|25[0-5]){1}$',
-            'gm'
-        );
-
-        if (ipv4Regex.test(ipaddresses[i])) {
-            Y.log('Correct ipv4 range.');
+        if (new RegExp(M.availability_ipaddress.ipv4RangeRegex).test(ip)) {
+            Y.log('Correct IPv4 range: ' + ip);
             continue;
         }
 
-        if (new RegExp(M.availability_ipaddress.v6)
-            .test(ipaddresses[i])) {
-            Y.log('Correct ipv6');
+        if (new RegExp(M.availability_ipaddress.ipv6Regex).test(ip)) {
+            Y.log('Correct IPv6: ' + ip);
             continue;
         }
 
-        // Test subnet with a regex.
-        if (new RegExp("^(?:".concat(M.availability_ipaddress.v4 + "\\/(3[0-2]|[12]?[0-9])|(1\\*)", ")|(?:")
-            .concat(M.availability_ipaddress.v6 + "\\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])", ")?\\/gm"))
-            .test(ipaddresses[i])) {
-            Y.log('Correct subnet');
+        if (subnetRegex.test(ip)) {
+            Y.log('Correct subnet: ' + ip);
             continue;
         }
 
-        Y.log('Incorrect ip');
+        Y.log('Incorrect IP: ' + ip);
         return false;
     }
 
-    Y.log('Valid ipaddresses');
+    Y.log('All IP addresses are valid');
     return true;
 };
 
