@@ -3,7 +3,7 @@ Enhance activity security by restricting access based on IP address. This plugin
 activity, making it accessible only to users from specified IP addresses.
 
 ## Author
-![ldesignmedia.nl](http://ldesignmedia.nl/logo_small.png)
+![MFreak.nl](https://MFreak.nl/logo_small.png)
 
 * Author: Luuk Verhoeven, [ldesignmedia.nl](https://ldesignmedia.nl/)
 * Min. required: Moodle 4.0
@@ -14,6 +14,7 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle402](https://img.shields.io/badge/moodle-4.2-brightgreen.svg?logo=moodle)
 ![Moodle403](https://img.shields.io/badge/moodle-4.3-brightgreen.svg?logo=moodle)
 ![Moodle404](https://img.shields.io/badge/moodle-4.4-brightgreen.svg?logo=moodle)
+![Moodle405](https://img.shields.io/badge/moodle-4.5-brightgreen.svg?logo=moodle)
 
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-brightgreen.svg?logo=php)
 ![PHP8.0](https://img.shields.io/badge/PHP-8.0-brightgreen.svg?logo=php)
@@ -57,6 +58,7 @@ Contributions are welcome and will be fully credited. We accept contributions vi
 
 ## Changelog
 
+- 2025040400 Tested on Moodle 4.5
 - 2024072000 Tested on Moodle 4.4
 - 2022021100 Thanks for adding ip-range support @[juacas](https://github.com/juacas)
 - 2022052800 Fixed the [issue 6](https://github.com/ldesignmediaNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)

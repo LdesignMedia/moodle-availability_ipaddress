@@ -112,9 +112,7 @@ class condition extends \core_availability\condition {
      * @param bool $not  Set true if we are inverting the condition
      * @param info $info Item we're checking
      *
-     * @return string Information string (for admin) about all restrictions on
-     *   this item
-     * @throws \coding_exception
+     * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, info $info): string {
         return get_string('require_condition', 'availability_ipaddress', getremoteaddr());
