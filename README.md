@@ -15,10 +15,12 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle403](https://img.shields.io/badge/moodle-4.3-brightgreen.svg?logo=moodle)
 ![Moodle404](https://img.shields.io/badge/moodle-4.4-brightgreen.svg?logo=moodle)
 ![Moodle405](https://img.shields.io/badge/moodle-4.5-brightgreen.svg?logo=moodle)
+![Moodle500](https://img.shields.io/badge/moodle-5.0-brightgreen.svg?logo=moodle)
 
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-brightgreen.svg?logo=php)
 ![PHP8.0](https://img.shields.io/badge/PHP-8.0-brightgreen.svg?logo=php)
 ![PHP8.1](https://img.shields.io/badge/PHP-8.1-brightgreen.svg?logo=php)
+![PHP8.2](https://img.shields.io/badge/PHP-8.2-brightgreen.svg?logo=php)
 
 ## List of features
 - Supports comma separate list of ip-addresses
