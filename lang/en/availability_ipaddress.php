@@ -31,7 +31,8 @@
 $string['pluginname'] = 'IP address';
 $string['description'] = 'Restrict access by ip-address or subnet';
 $string['title'] = 'IP address';
-$string['require_condition'] = 'Matching ip-address/subnet. (Your IP:{$a})';
+$string['require_condition'] = 'ip-address/subnet is allowed (Your IP:{$a})';
+$string['require_condition_not'] = 'ip-address/subnet is not blocked (Your IP:{$a})';
 
 // Errors.
 $string['error_ipaddress'] = 'Incorrect ip-address/subnet format';

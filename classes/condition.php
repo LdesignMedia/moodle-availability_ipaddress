@@ -163,7 +163,10 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, info $info): string {
-        return get_string('require_condition', 'availability_ipaddress', getremoteaddr());
+
+        $desc = $not ? 'require_condition_not' : 'require_condition';
+
+        return get_string($desc, 'availability_ipaddress', getremoteaddr());
     }
 
     /**
