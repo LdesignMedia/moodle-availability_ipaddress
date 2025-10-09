@@ -43,8 +43,10 @@ M.availability_ipaddress.form = Y.Object(M.core_availability.plugin);
  * @method initInner
  * @param {Array} param Array of objects
  */
-M.availability_ipaddress.form.initInner = function() {
+M.availability_ipaddress.form.initInner = function(param) {
     "use strict";
+    // Store predefined ranges from backend.
+    this.predefinedRanges = param || [];
 };
 
 /**
@@ -77,22 +79,66 @@ M.availability_ipaddress.form.getValue = function(field, node) {
  */
 M.availability_ipaddress.form.getNode = function(json) {
     "use strict";
-    var html, node, root, id;
+    var html, node, root, id, selectId, i, range;
 
     // Make sure we work with unique id.
     id = 'ipaddresses' + M.availability_ipaddress.form.instId;
+    selectId = 'predefined' + M.availability_ipaddress.form.instId;
     M.availability_ipaddress.form.instId += 1;
 
     // Create HTML structure.
-    html = '';
-    html += '<span class="availability-group"><label for="' + id + '"><span class="p-r-1">' +
-        M.util.get_string('title', 'availability_ipaddress') + ' </span></label>';
-    html += '<input type="text" placeholder="192.168.178.1,231.54.211.0/20,231.3.56.211" name="ipaddresses" id="' + id + '">';
-    node = Y.Node.create('<span class="form-inline">' + html + '</span>');
+    html = '<div class="availability-ipaddress-container">';
+
+    // Add predefined ranges if available.
+    if (this.predefinedRanges && this.predefinedRanges.length > 0) {
+        html += '<div class="availability-group">';
+        html += '<label><span class="p-r-1">' +
+            M.util.get_string('use_predefined', 'availability_ipaddress') + '</span></label>';
+        html += '<select name="predefined_ranges" id="' + selectId +
+            '" multiple="multiple" class="form-control" style="min-height: 100px;">';
+
+        for (i = 0; i < this.predefinedRanges.length; i++) {
+            range = this.predefinedRanges[i];
+            html += '<option value="' + range.id + '" data-ipaddresses="' + Y.Escape.html(range.ipaddresses) + '">';
+            html += Y.Escape.html(range.name);
+            html += '</option>';
+        }
+
+        html += '</select>';
+        html += '</div>';
+
+        html += '<div class="availability-group" style="margin-top: 10px;">';
+        html += '<label for="' + id + '"><span class="p-r-1">' +
+            M.util.get_string('custom_ipaddress', 'availability_ipaddress') + '</span></label>';
+    } else {
+        html += '<div class="availability-group">';
+        html += '<label for="' + id + '"><span class="p-r-1">' +
+            M.util.get_string('title', 'availability_ipaddress') + '</span></label>';
+    }
+
+    html += '<input type="text" placeholder="192.168.178.1,231.54.211.0/20,231.3.56.211" name="ipaddresses" id="' +
+        id + '" class="form-control">';
+    html += '</div>';
+    html += '</div>';
+
+    node = Y.Node.create('<div>' + html + '</div>');
 
     // Set initial values, if specified.
     if (json.ipaddresses !== undefined) {
         node.one('input[name=ipaddresses]').set('value', json.ipaddresses);
+    }
+
+    // Set selected predefined ranges if specified.
+    if (json.predefined_ranges !== undefined && this.predefinedRanges && this.predefinedRanges.length > 0) {
+        var select = node.one('select[name=predefined_ranges]');
+        if (select) {
+            json.predefined_ranges.forEach(function(rangeId) {
+                var option = select.one('option[value="' + rangeId + '"]');
+                if (option) {
+                    option.set('selected', true);
+                }
+            });
+        }
     }
 
     // Add event handlers (first time only).
@@ -103,6 +149,11 @@ M.availability_ipaddress.form.getNode = function(json) {
             // Trigger the updating of the hidden availability data whenever the ipaddress field changes.
             M.core_availability.form.update();
         }, '.availability_ipaddress input[name=ipaddresses]');
+
+        root.delegate('change', function() {
+            // Trigger the updating when predefined ranges are selected.
+            M.core_availability.form.update();
+        }, '.availability_ipaddress select[name=predefined_ranges]');
     }
 
     return node;
@@ -116,6 +167,10 @@ M.availability_ipaddress.form.getNode = function(json) {
  */
 M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     'use strict';
+    // Return true for empty string - it's valid to have no custom IPs
+    if (!ipaddresses || ipaddresses.trim() === '') {
+        return true;
+    }
     ipaddresses = ipaddresses.split(',');
     for (var i in ipaddresses) {
 
@@ -129,7 +184,7 @@ M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
         var ipv4Regex = new RegExp(
             '^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)' +
             '(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}-' +
-            '([0-1]?[0-9]?[0-9]?|2[0-4][0-9]|25[0-5]){1}$',
+            '(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$',
             'gm'
         );
 
@@ -168,6 +223,20 @@ M.availability_ipaddress.form.fillValue = function(value, node) {
     // with the structure used in the __construct and save functions
     // within condition.php.
     value.ipaddresses = this.getValue('ipaddresses', node);
+
+    // Get selected predefined ranges.
+    var select = node.one('select[name=predefined_ranges]');
+    if (select) {
+        var selectedRanges = [];
+        select.get('options').each(function(option) {
+            if (option.get('selected')) {
+                selectedRanges.push(parseInt(option.get('value')));
+            }
+        });
+        if (selectedRanges.length > 0) {
+            value.predefined_ranges = selectedRanges;
+        }
+    }
 };
 
 /**
@@ -180,8 +249,9 @@ M.availability_ipaddress.form.fillErrors = function(errors, node) {
     var value = {};
     this.fillValue(value, node);
 
-    // Basic ipaddresses checks.
-    if (M.availability_ipaddress.validateIpaddress(value.ipaddresses) === false) {
+    // Basic ipaddresses checks - only validate if not empty.
+    if (value.ipaddresses && value.ipaddresses.trim() !== '' &&
+        M.availability_ipaddress.validateIpaddress(value.ipaddresses) === false) {
         errors.push('availability_ipaddress:error_ipaddress');
     }
 };

@@ -15,20 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Settings for availability_ipaddress.
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @package   availability_ipaddress
- * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
- * @author    Luuk Verhoeven
- **/
+ * @package    availability_ipaddress
+ * @copyright  04/08/2025 LdesignMedia.nl - Luuk Verhoeven
+ * @author     Vincent Cornelis
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'availability_ipaddress';
-$plugin->version = 2025080401;
-$plugin->release = '5.0.2';
-$plugin->requires = 2016120500;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->supported = [400, 500];
+global $ADMIN;
+
+if ($hassiteconfig) {
+
+    // Add external page for managing IP ranges.
+    $ADMIN->add(
+        'availabilitysettings',
+        new admin_externalpage(
+            'availability_ipaddress_ranges',
+            get_string('setting:manage_predefined_ranges', 'availability_ipaddress'),
+            new moodle_url('/availability/condition/ipaddress/manage_ranges.php'),
+            'moodle/site:config'
+    ));
+}
+
+// Set the visible name of auto generated settings page to empty string,
+// to avoid showing it in the settings tree, as we only add the external page.
+$settings->visiblename = '';

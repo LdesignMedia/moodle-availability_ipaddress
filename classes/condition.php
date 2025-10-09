@@ -38,24 +38,40 @@ use core_availability\info;
 class condition extends \core_availability\condition {
 
     /**
+     * Manual provided IP addresses.
+     *
      * @var string
      */
     protected string $ipaddresses = '';
+
+    /**
+     * Predefined IP address ranges.
+     *
+     * @var array
+     */
+    protected array $predefinedranges = [];
 
     /**
      * condition constructor.
      *
      * @param \stdClass $structure
      */
-    public function __construct($structure) {
+    public function __construct(\stdClass $structure) {
         if (isset($structure->ipaddresses)) {
             $this->ipaddresses = $structure->ipaddresses;
+        }
+        if (isset($structure->predefined_ranges)) {
+            $this->predefinedranges = $structure->predefined_ranges;
         }
     }
 
     /**
      * Determines whether a particular item is currently available
      * according to this availability condition.
+     *
+     * Note: Cannot add type declarations for $not, $grabthelot, and $userid parameters
+     * as the parent core_availability\condition::is_available() method doesn't have them,
+     * and PHP requires compatibility with parent method signatures when overriding.
      *
      * If implementations require a course or modinfo, they should use
      * the get methods in $info.
@@ -78,14 +94,43 @@ class condition extends \core_availability\condition {
      * @return bool True if available
      */
     public function is_available($not, info $info, $grabthelot, $userid): bool {
+        global $DB;
 
-        if (empty($this->ipaddresses)) {
+        // Collect all IP addresses to check.
+        $allipaddresses = [];
+
+        // Add custom IP addresses.
+        if (!empty($this->ipaddresses)) {
+            $allipaddresses[] = trim($this->ipaddresses);
+        }
+
+        // Add predefined ranges.
+        if (!empty($this->predefinedranges)) {
+            $ranges = $DB->get_records_list(
+                'availability_ipaddress_pre',
+                'id',
+                $this->predefinedranges,
+                '',
+                'ipaddresses'
+            );
+            foreach ($ranges as $range) {
+                if (!empty($range->ipaddresses)) {
+                    $allipaddresses[] = trim($range->ipaddresses);
+                }
+            }
+        }
+
+        // If no IP addresses are configured, the condition passes.
+        if (empty($allipaddresses)) {
             return !$not;
         }
 
-        // Check if ip-address matches.
-        if (address_in_subnet(getremoteaddr(), trim($this->ipaddresses))) {
-            return !$not;
+        // Check if user's IP matches any of the allowed addresses.
+        $userip = getremoteaddr();
+        foreach ($allipaddresses as $iplist) {
+            if (address_in_subnet($userip, $iplist)) {
+                return !$not;
+            }
         }
 
         return $not;
@@ -96,6 +141,9 @@ class condition extends \core_availability\condition {
      * it actually applies). Used to obtain information that is displayed to
      * students if the activity is not available to them, and for staff to see
      * what conditions are.
+     *
+     * Note: Cannot add type declarations for $full and $not parameters as the parent
+     * core_availability\condition::get_description() method doesn't have them.
      *
      * The $full parameter can be used to distinguish between 'staff' cases
      * (when displaying all information about the activity) and 'student' cases
@@ -115,7 +163,10 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, info $info): string {
-        return get_string('require_condition', 'availability_ipaddress', getremoteaddr());
+
+        $desc = $not ? 'require_condition_not' : 'require_condition';
+
+        return get_string($desc, 'availability_ipaddress', getremoteaddr());
     }
 
     /**
@@ -151,10 +202,16 @@ class condition extends \core_availability\condition {
      * @return \stdClass Structure object (ready to be made into JSON format)
      */
     public function save(): \stdClass {
-        return (object) [
+        $result = (object) [
             'type' => 'ipaddress',
             'ipaddresses' => $this->ipaddresses,
         ];
+
+        if (!empty($this->predefinedranges)) {
+            $result->predefined_ranges = $this->predefinedranges;
+        }
+
+        return $result;
     }
 
 }
