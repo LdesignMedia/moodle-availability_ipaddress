@@ -11,7 +11,7 @@ activity, making it accessible only to users from specified IP addresses.
 * Author: Luuk Verhoeven, [ldesignmedia.nl](https://ldesignmedia.nl/)
 * Author: Vincent Cornelis, [ldesignmedia.nl](https://ldesignmedia.nl/)
 * Min. required: Moodle 4.0
-* Supports PHP: 7.4
+* Supports PHP: 7.3+
 
 ![Moodle400](https://img.shields.io/badge/moodle-4.0-F98012.svg?logo=moodle)
 ![Moodle401](https://img.shields.io/badge/moodle-4.1-F98012.svg?logo=moodle)
@@ -21,6 +21,7 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle405](https://img.shields.io/badge/moodle-4.5-F98012.svg?logo=moodle)
 ![Moodle500](https://img.shields.io/badge/moodle-5.0-F98012.svg?logo=moodle)
 
+![PHP7.3](https://img.shields.io/badge/PHP-7.3-777BB4.svg?logo=php)
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-777BB4.svg?logo=php)
 ![PHP8.0](https://img.shields.io/badge/PHP-8.0-777BB4.svg?logo=php)
 ![PHP8.1](https://img.shields.io/badge/PHP-8.1-777BB4.svg?logo=php)
@@ -62,12 +63,30 @@ The GNU GENERAL PUBLIC LICENSE. Please see [License File](LICENSE) for more info
 
 Contributions are welcome and will be fully credited. We accept contributions via Pull Requests on Github.
 
-## Changelog
+### Changelog
 
-- 2024080401 Added support for pre-configuring IP ranges by admins
-- 2025052200 Tested on Moodle 5.0
-- 2025040400 Tested on Moodle 4.5
-- 2024072000 Tested on Moodle 4.4
-- 2022021100 Thanks for adding ip-range support @[juacas](https://github.com/juacas)
-- 2022052800 Fixed the [issue 6](https://github.com/ldesignmediaNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
-- 2022052801 Test in Moodle 4.0 @[hamzatamyachte](https://github.com/hamzatamyachte)
+##### 5.0.3 (15.03.2026)
+* Fixed PHP 7.3 compatibility issue that broke Moodle 4.0.x servers ([#13](https://github.com/LdesignMedia/moodle-availability_ipaddress/issues/13))
+* Removed typed properties (PHP 7.4+) to support PHP 7.3+
+* Lowered environment.xml PHP requirement from 7.4 to 7.3
+
+##### 5.0.2 (04.08.2025)
+* Added support for pre-configuring IP ranges by admins
+
+##### 5.0.1 (22.05.2025)
+* Tested on Moodle 5.0
+
+##### 4.5.0 (04.04.2025)
+* Tested on Moodle 4.5
+
+##### 4.4.0 (20.07.2024)
+* Tested on Moodle 4.4
+
+##### 4.0.2 (28.05.2022)
+* Tested on Moodle 4.0 @[hamzatamyachte](https://github.com/hamzatamyachte)
+
+##### 4.0.1 (28.05.2022)
+* Fixed [issue 6](https://github.com/ldesignmediaNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
+
+##### 3.9.0 (11.02.2022)
+* Added ip-range support @[juacas](https://github.com/juacas)
