@@ -42,14 +42,14 @@ class condition extends \core_availability\condition {
      *
      * @var string
      */
-    protected string $ipaddresses = '';
+    protected $ipaddresses = '';
 
     /**
      * Predefined IP address ranges.
      *
      * @var array
      */
-    protected array $predefinedranges = [];
+    protected $predefinedranges = [];
 
     /**
      * condition constructor.
