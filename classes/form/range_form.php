@@ -39,7 +39,6 @@ require_once($CFG->libdir . '/formslib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class range_form extends \moodleform {
-
     /**
      * Define the form.
      *
@@ -72,8 +71,12 @@ class range_form extends \moodleform {
         $mform->addHelpButton('ipaddresses', 'ipaddresses_help', 'availability_ipaddress');
 
         // Description field.
-        $mform->addElement('textarea', 'description', get_string('description'),
-            ['rows' => 3, 'cols' => 60]);
+        $mform->addElement(
+            'textarea',
+            'description',
+            get_string('description'),
+            ['rows' => 3, 'cols' => 60]
+        );
         $mform->setType('description', PARAM_TEXT);
 
         // Enabled field.
@@ -147,5 +150,4 @@ class range_form extends \moodleform {
 
         return false;
     }
-
 }

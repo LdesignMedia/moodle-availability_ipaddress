@@ -34,7 +34,6 @@ namespace availability_ipaddress;
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  */
 class frontend extends \core_availability\frontend {
-
     /**
      * get_javascript_strings
      *
@@ -81,5 +80,4 @@ class frontend extends \core_availability\frontend {
 
         return [$rangedata];
     }
-
 }

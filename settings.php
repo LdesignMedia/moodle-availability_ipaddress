@@ -29,7 +29,6 @@ defined('MOODLE_INTERNAL') || die();
 global $ADMIN;
 
 if ($hassiteconfig) {
-
     // Add external page for managing IP ranges.
     $ADMIN->add(
         'availabilitysettings',
@@ -38,7 +37,8 @@ if ($hassiteconfig) {
             get_string('setting:manage_predefined_ranges', 'availability_ipaddress'),
             new moodle_url('/availability/condition/ipaddress/manage_ranges.php'),
             'moodle/site:config'
-    ));
+        )
+    );
 }
 
 // Set the visible name of auto generated settings page to empty string,
