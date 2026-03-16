@@ -44,11 +44,19 @@ if ($action === 'delete' && confirm_sesskey()) {
     $DB->delete_records('availability_ipaddress_pre', ['id' => $id]);
 
     if ($removed > 0) {
-        redirect($PAGE->url, get_string('range_deleted_and_removed', 'availability_ipaddress', $removed),
-            null, \core\output\notification::NOTIFY_SUCCESS);
+        redirect(
+            $PAGE->url,
+            get_string('range_deleted_and_removed', 'availability_ipaddress', $removed),
+            null,
+            \core\output\notification::NOTIFY_SUCCESS
+        );
     } else {
-        redirect($PAGE->url, get_string('range_deleted', 'availability_ipaddress'), null,
-            \core\output\notification::NOTIFY_SUCCESS);
+        redirect(
+            $PAGE->url,
+            get_string('range_deleted', 'availability_ipaddress'),
+            null,
+            \core\output\notification::NOTIFY_SUCCESS
+        );
     }
 }
 
@@ -63,8 +71,12 @@ if ($action === 'toggle' && confirm_sesskey()) {
     if (!$record->enabled) {
         $removed = \availability_ipaddress\helper::remove_range_from_restrictions($id);
         if ($removed > 0) {
-            redirect($PAGE->url, get_string('range_disabled_and_removed', 'availability_ipaddress', $removed),
-                null, \core\output\notification::NOTIFY_SUCCESS);
+            redirect(
+                $PAGE->url,
+                get_string('range_disabled_and_removed', 'availability_ipaddress', $removed),
+                null,
+                \core\output\notification::NOTIFY_SUCCESS
+            );
         }
     }
 
@@ -85,15 +97,23 @@ if ($action === 'add' || $action === 'edit') {
             // Update existing.
             $data->timemodified = time();
             $DB->update_record('availability_ipaddress_pre', $data);
-            redirect($PAGE->url, get_string('range_updated', 'availability_ipaddress'), null,
-                \core\output\notification::NOTIFY_SUCCESS);
+            redirect(
+                $PAGE->url,
+                get_string('range_updated', 'availability_ipaddress'),
+                null,
+                \core\output\notification::NOTIFY_SUCCESS
+            );
         } else {
             // Create new.
             $data->timecreated = time();
             $data->timemodified = time();
             $DB->insert_record('availability_ipaddress_pre', $data);
-            redirect($PAGE->url, get_string('range_created', 'availability_ipaddress'), null,
-                \core\output\notification::NOTIFY_SUCCESS);
+            redirect(
+                $PAGE->url,
+                get_string('range_created', 'availability_ipaddress'),
+                null,
+                \core\output\notification::NOTIFY_SUCCESS
+            );
         }
     }
 

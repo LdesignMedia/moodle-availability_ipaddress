@@ -20,6 +20,7 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle404](https://img.shields.io/badge/moodle-4.4-F98012.svg?logo=moodle)
 ![Moodle405](https://img.shields.io/badge/moodle-4.5-F98012.svg?logo=moodle)
 ![Moodle500](https://img.shields.io/badge/moodle-5.0-F98012.svg?logo=moodle)
+![Moodle501](https://img.shields.io/badge/moodle-5.1-F98012.svg?logo=moodle)
 
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-777BB4.svg?logo=php)
 ![PHP8.0](https://img.shields.io/badge/PHP-8.0-777BB4.svg?logo=php)
@@ -64,10 +65,4 @@ Contributions are welcome and will be fully credited. We accept contributions vi
 
 ## Changelog
 
-- 2024080401 Added support for pre-configuring IP ranges by admins
-- 2025052200 Tested on Moodle 5.0
-- 2025040400 Tested on Moodle 4.5
-- 2024072000 Tested on Moodle 4.4
-- 2022021100 Thanks for adding ip-range support @[juacas](https://github.com/juacas)
-- 2022052800 Fixed the [issue 6](https://github.com/ldesignmediaNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
-- 2022052801 Test in Moodle 4.0 @[hamzatamyachte](https://github.com/hamzatamyachte)
+See [CHANGELOG.md](CHANGELOG.md) for a full list of changes.

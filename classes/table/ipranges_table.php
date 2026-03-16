@@ -45,7 +45,6 @@ use confirm_action;
  * @author     Vincent Cornelis
  */
 class ipranges_table extends table_sql {
-
     /**
      * @var moodle_url The base URL for the page.
      */
@@ -185,8 +184,10 @@ class ipranges_table extends table_sql {
 
         // Edit action.
         $editurl = new moodle_url($this->baseurl, ['action' => 'edit', 'id' => $range->id]);
-        $actions[] = $OUTPUT->action_icon($editurl,
-            new pix_icon('t/edit', get_string('edit')));
+        $actions[] = $OUTPUT->action_icon(
+            $editurl,
+            new pix_icon('t/edit', get_string('edit'))
+        );
 
         // Toggle action.
         $toggleurl = new moodle_url($this->baseurl, ['action' => 'toggle', 'id' => $range->id, 'sesskey' => sesskey()]);
@@ -199,10 +200,16 @@ class ipranges_table extends table_sql {
             if ($usage['inuse']) {
                 // Create confirmation message with usage details.
                 $message = \availability_ipaddress\helper::get_range_usage_html($range->id);
-                $message .= \html_writer::tag('p', get_string('confirm_disable_range', 'availability_ipaddress'),
-                    ['class' => 'font-weight-bold']);
-                $actions[] = $OUTPUT->action_icon($toggleurl, new pix_icon($toggleicon, $togglestring),
-                    new confirm_action($message));
+                $message .= \html_writer::tag(
+                    'p',
+                    get_string('confirm_disable_range', 'availability_ipaddress'),
+                    ['class' => 'font-weight-bold']
+                );
+                $actions[] = $OUTPUT->action_icon(
+                    $toggleurl,
+                    new pix_icon($toggleicon, $togglestring),
+                    new confirm_action($message)
+                );
             } else {
                 $actions[] = $OUTPUT->action_icon($toggleurl, new pix_icon($toggleicon, $togglestring));
             }
@@ -222,17 +229,21 @@ class ipranges_table extends table_sql {
         $usage = \availability_ipaddress\helper::is_range_in_use($range->id);
         if ($usage['inuse']) {
             $message = \availability_ipaddress\helper::get_range_usage_html($range->id);
-            $message .= \html_writer::tag('p', get_string('confirm_delete_range', 'availability_ipaddress'),
-                ['class' => 'font-weight-bold']);
+            $message .= \html_writer::tag(
+                'p',
+                get_string('confirm_delete_range', 'availability_ipaddress'),
+                ['class' => 'font-weight-bold']
+            );
         } else {
             $message = get_string('confirm_delete_range', 'availability_ipaddress');
         }
 
-        $actions[] = $OUTPUT->action_icon($deleteurl,
+        $actions[] = $OUTPUT->action_icon(
+            $deleteurl,
             new pix_icon('t/delete', get_string('delete')),
-            new confirm_action($message));
+            new confirm_action($message)
+        );
 
         return implode(' ', $actions);
     }
-
 }

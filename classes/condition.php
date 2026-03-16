@@ -36,7 +36,6 @@ use core_availability\info;
  * @copyright 2019-05-14 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  */
 class condition extends \core_availability\condition {
-
     /**
      * Manual provided IP addresses.
      *
@@ -213,5 +212,4 @@ class condition extends \core_availability\condition {
 
         return $result;
     }
-
 }
