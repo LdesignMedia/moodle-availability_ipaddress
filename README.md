@@ -11,7 +11,7 @@ activity, making it accessible only to users from specified IP addresses.
 * Author: Luuk Verhoeven, [ldesignmedia.nl](https://ldesignmedia.nl/)
 * Author: Vincent Cornelis, [ldesignmedia.nl](https://ldesignmedia.nl/)
 * Min. required: Moodle 4.0
-* Supports PHP: 7.4
+* Supports PHP: 7.3+
 
 ![Moodle400](https://img.shields.io/badge/moodle-4.0-F98012.svg?logo=moodle)
 ![Moodle401](https://img.shields.io/badge/moodle-4.1-F98012.svg?logo=moodle)
@@ -22,6 +22,7 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle500](https://img.shields.io/badge/moodle-5.0-F98012.svg?logo=moodle)
 ![Moodle501](https://img.shields.io/badge/moodle-5.1-F98012.svg?logo=moodle)
 
+![PHP7.3](https://img.shields.io/badge/PHP-7.3-777BB4.svg?logo=php)
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-777BB4.svg?logo=php)
 ![PHP8.0](https://img.shields.io/badge/PHP-8.0-777BB4.svg?logo=php)
 ![PHP8.1](https://img.shields.io/badge/PHP-8.1-777BB4.svg?logo=php)
@@ -63,6 +64,6 @@ The GNU GENERAL PUBLIC LICENSE. Please see [License File](LICENSE) for more info
 
 Contributions are welcome and will be fully credited. We accept contributions via Pull Requests on Github.
 
-## Changelog
+### Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for a full list of changes.
