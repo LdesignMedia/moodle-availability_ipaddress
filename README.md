@@ -20,6 +20,7 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle404](https://img.shields.io/badge/moodle-4.4-F98012.svg?logo=moodle)
 ![Moodle405](https://img.shields.io/badge/moodle-4.5-F98012.svg?logo=moodle)
 ![Moodle500](https://img.shields.io/badge/moodle-5.0-F98012.svg?logo=moodle)
+![Moodle501](https://img.shields.io/badge/moodle-5.1-F98012.svg?logo=moodle)
 
 ![PHP7.3](https://img.shields.io/badge/PHP-7.3-777BB4.svg?logo=php)
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-777BB4.svg?logo=php)
@@ -65,28 +66,4 @@ Contributions are welcome and will be fully credited. We accept contributions vi
 
 ### Changelog
 
-##### 5.0.3 (15.03.2026)
-* Fixed PHP 7.3 compatibility issue that broke Moodle 4.0.x servers ([#13](https://github.com/LdesignMedia/moodle-availability_ipaddress/issues/13))
-* Removed typed properties (PHP 7.4+) to support PHP 7.3+
-* Lowered environment.xml PHP requirement from 7.4 to 7.3
-
-##### 5.0.2 (04.08.2025)
-* Added support for pre-configuring IP ranges by admins
-
-##### 5.0.1 (22.05.2025)
-* Tested on Moodle 5.0
-
-##### 4.5.0 (04.04.2025)
-* Tested on Moodle 4.5
-
-##### 4.4.0 (20.07.2024)
-* Tested on Moodle 4.4
-
-##### 4.0.2 (28.05.2022)
-* Tested on Moodle 4.0 @[hamzatamyachte](https://github.com/hamzatamyachte)
-
-##### 4.0.1 (28.05.2022)
-* Fixed [issue 6](https://github.com/ldesignmediaNL/moodle-availability_ipaddress/issues/6) @[hamzatamyachte](https://github.com/hamzatamyachte)
-
-##### 3.9.0 (11.02.2022)
-* Added ip-range support @[juacas](https://github.com/juacas)
+See [CHANGELOG.md](CHANGELOG.md) for a full list of changes.

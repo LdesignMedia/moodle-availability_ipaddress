@@ -34,7 +34,6 @@ namespace availability_ipaddress;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class helper {
-
     /**
      * Check if a predefined range is in use.
      *
@@ -296,7 +295,6 @@ class helper {
 
         // Process nested conditions.
         return self::process_nested_conditions($availability, $rangeid) || $modified;
-
     }
 
     /**
@@ -361,5 +359,4 @@ class helper {
 
         return $modified;
     }
-
 }
