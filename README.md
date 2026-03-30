@@ -49,9 +49,6 @@ activity, making it accessible only to users from specified IP addresses.
    1. The users with matching ip addresses can view the activity.
 5. Save the activity
 
-## TODO 
-- Behat tests ip validation
-
 ## Security
 
 If you discover any security related issues, please email [luuk@ldesignmedia.nl](mailto:luuk@ldesignmedia.nl) instead of using the issue tracker.
