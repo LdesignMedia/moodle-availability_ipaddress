@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.3.0 (2026092300)
+- Tested and verified on Moodle 5.3
+
 ## 5.2.0 (2026031802)
 - Tested and verified on Moodle 5.2
 

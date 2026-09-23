@@ -22,6 +22,7 @@ activity, making it accessible only to users from specified IP addresses.
 ![Moodle500](https://img.shields.io/badge/moodle-5.0-F98012.svg?logo=moodle)
 ![Moodle501](https://img.shields.io/badge/moodle-5.1-F98012.svg?logo=moodle)
 ![Moodle502](https://img.shields.io/badge/moodle-5.2-F98012.svg?logo=moodle)
+![Moodle503](https://img.shields.io/badge/moodle-5.3-F98012.svg?logo=moodle)
 
 ![PHP7.3](https://img.shields.io/badge/PHP-7.3-777BB4.svg?logo=php)
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-777BB4.svg?logo=php)
