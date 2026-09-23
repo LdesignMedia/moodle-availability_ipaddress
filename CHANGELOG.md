@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.2.0 (2026031802)
+- Tested and verified on Moodle 5.2
+
 ## 5.1.1 (2026031800)
 * Fixed PHP 7.3 compatibility issue that broke Moodle 4.0.x servers ([#13](https://github.com/LdesignMedia/moodle-availability_ipaddress/issues/13))
 * Removed typed properties (PHP 7.4+) to support PHP 7.3+
