@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.3.1 (2026101400)
+- Solved CI tests https://github.com/LdesignMedia/moodle-availability_ipaddress/issues/20 | Thanks @minhduchoang195
+
 ## 5.3.0 (2026092300)
 - Tested and verified on Moodle 5.3
 
