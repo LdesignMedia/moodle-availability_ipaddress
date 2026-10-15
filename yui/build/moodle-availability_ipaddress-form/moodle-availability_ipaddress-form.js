@@ -15,11 +15,12 @@ YUI.add('moodle-availability_ipaddress-form', function (Y, NAME) {
  */
 M.availability_ipaddress = M.availability_ipaddress || {};
 
+// A single IPv4 octet (0-255) without leading zeros.
+M.availability_ipaddress.octet = '(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)';
+
 // MIT https://github.com/sindresorhus/ip-regex
-// Advanced ip-address regex for validating.
-M.availability_ipaddress.v4 = '(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\\.(?:25[0-5]|2[0-4][0-9]|1[0-9]' +
-    '[0-9]|[1-9][0-9]|[0-9])){3}';
-M.availability_ipaddress.v6 = "^((?:[a-fA-F\\d]{1,4}:){7}(?:[a-fA-F\\d]{1,4}|:)|(?:[a-fA-F\\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]" +
+// IPv6 address, without anchors so it can be combined.
+M.availability_ipaddress.v6 = "((?:[a-fA-F\\d]{1,4}:){7}(?:[a-fA-F\\d]{1,4}|:)|(?:[a-fA-F\\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]" +
     "\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}|:[a-fA-F\\d]{1,4}|:)|(?:[a-fA-F\\d]{1,4}:){5}" +
     "(?::(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}|(:[a-fA-F\\d]{1,4})" +
     "{1,2}|:)|(?:[a-fA-F\\d]{1,4}:){4}(?:(:[a-fA-F\\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]" +
@@ -29,7 +30,7 @@ M.availability_ipaddress.v6 = "^((?:[a-fA-F\\d]{1,4}:){7}(?:[a-fA-F\\d]{1,4}|:)|
     "\\d|1\\d\\d|[1-9]\\d|\\d)){3}|(:[a-fA-F\\d]{1,4}){1,5}|:)|(?:[a-fA-F\\d]{1,4}:){1}(?:(:[a-fA-F\\d]{1,4}){0,4}:(?:25[0-5]" +
     "|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}|(:[a-fA-F\\d]{1,4}){1,6}|:)|(?::" +
     "((?::[a-fA-F\\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}" +
-    "|(?::[a-fA-F\\d]{1,4}){1,7}|:)))(%[0-9a-zA-Z]{1,})?";
+    "|(?::[a-fA-F\\d]{1,4}){1,7}|:)))";
 
 /**
  * @class M.availability_ipaddress.form
@@ -160,51 +161,138 @@ M.availability_ipaddress.form.getNode = function(json) {
 };
 
 /**
- * Validate ipaddresses
+ * Check if a value is a valid IPv4 address.
  *
- * @param {string[]} ipaddresses
+ * @param {string} value
+ * @returns {boolean}
+ */
+M.availability_ipaddress.isIpv4 = function(value) {
+    'use strict';
+    var octet = M.availability_ipaddress.octet;
+    return new RegExp('^' + octet + '(?:\\.' + octet + '){3}$').test(value);
+};
+
+/**
+ * Check if a value is a valid IPv6 address that Moodle's cleanremoteaddr() can parse.
+ *
+ * cleanremoteaddr() doesn't handle embedded IPv4 notation reliably and only expands "::"
+ * when it replaces at least two groups, or three at the start or end of the address.
+ *
+ * @param {string} value
+ * @returns {boolean}
+ */
+M.availability_ipaddress.isIpv6 = function(value) {
+    'use strict';
+    var groups;
+
+    if (value.indexOf('.') !== -1 || !new RegExp('^' + M.availability_ipaddress.v6 + '$').test(value)) {
+        return false;
+    }
+    if (value.indexOf('::') === -1) {
+        return true;
+    }
+
+    groups = value.split(':').filter(function(group) {
+        return group !== '';
+    }).length;
+    if (value.indexOf('::') === 0 || value.slice(-2) === '::') {
+        return groups <= 5;
+    }
+    return groups <= 6;
+};
+
+/**
+ * Trim the same characters as PHP's trim(), which address_in_subnet() uses.
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+M.availability_ipaddress.trim = function(value) {
+    'use strict';
+    var chars = ' \t\n\r\x00\x0B',
+        start = 0,
+        end = value.length;
+
+    while (start < end && chars.indexOf(value.charAt(start)) !== -1) {
+        start++;
+    }
+    while (end > start && chars.indexOf(value.charAt(end - 1)) !== -1) {
+        end--;
+    }
+    return value.substring(start, end);
+};
+
+/**
+ * Validate a single entry. Only formats that Moodle's address_in_subnet() understands are
+ * accepted, anything else would be silently ignored when the restriction is checked.
+ *
+ * - Address: 192.168.1.1 or 2001:db8::1
+ * - Subnet: 192.168.1.0/24 or 2001:db8::/32
+ * - Range in the last group: 192.168.1.1-255 or 2001:db8::1-ff
+ *
+ * @param {string} entry
+ * @returns {boolean}
+ */
+M.availability_ipaddress.validateEntry = function(entry) {
+    'use strict';
+    var parts, mask, lastgroup;
+
+    if (entry.indexOf('/') !== -1) {
+        parts = entry.split('/');
+        // Moodle's is_number() rejects a mask with leading zeros.
+        if (parts.length !== 2 || !/^(0|[1-9]\d{0,2})$/.test(parts[1])) {
+            return false;
+        }
+        mask = parseInt(parts[1], 10);
+        if (M.availability_ipaddress.isIpv4(parts[0])) {
+            return mask <= 32;
+        }
+        return M.availability_ipaddress.isIpv6(parts[0]) && mask <= 128;
+    }
+
+    if (entry.indexOf('-') !== -1) {
+        parts = entry.split('-');
+        if (parts.length !== 2) {
+            return false;
+        }
+
+        // The end of the range may not be lower than the start, it would never match.
+        if (M.availability_ipaddress.isIpv4(parts[0])) {
+            return new RegExp('^' + M.availability_ipaddress.octet + '$').test(parts[1]) &&
+                parseInt(parts[1], 10) >= parseInt(parts[0].split('.')[3], 10);
+        }
+        if (M.availability_ipaddress.isIpv6(parts[0])) {
+            lastgroup = parts[0].split(':').pop() || '0';
+            return /^[a-fA-F\d]{1,4}$/.test(parts[1]) && parseInt(parts[1], 16) >= parseInt(lastgroup, 16);
+        }
+        return false;
+    }
+
+    // An address ending in ":" is treated as an incomplete prefix by address_in_subnet(), which fails to parse it.
+    return M.availability_ipaddress.isIpv4(entry) || (M.availability_ipaddress.isIpv6(entry) && entry.slice(-1) !== ':');
+};
+
+/**
+ * Validate a comma separated list of ipaddresses.
+ *
+ * @param {string} ipaddresses
  * @returns {boolean}
  */
 M.availability_ipaddress.validateIpaddress = function(ipaddresses) {
     'use strict';
-    // Return true for empty string - it's valid to have no custom IPs
-    if (!ipaddresses || ipaddresses.trim() === '') {
+    var entries, i;
+
+    // Return true for empty string - it's valid to have no custom IPs.
+    if (!ipaddresses || M.availability_ipaddress.trim(ipaddresses) === '') {
         return true;
     }
-    ipaddresses = ipaddresses.split(',');
-    for (var i in ipaddresses) {
 
-        // Test normal ip format.
-        // Strict ipv4 check.
-        if (new RegExp(/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm)
-            .test(ipaddresses[i])) {
-            continue;
+    entries = ipaddresses.split(',');
+    for (i = 0; i < entries.length; i++) {
+        // Whitespace around an entry is allowed, address_in_subnet() trims it as well.
+        if (!M.availability_ipaddress.validateEntry(M.availability_ipaddress.trim(entries[i]))) {
+            return false;
         }
-
-        var ipv4Regex = new RegExp(
-            '^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)' +
-            '(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}-' +
-            '(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$',
-            'gm'
-        );
-
-        if (ipv4Regex.test(ipaddresses[i])) {
-            continue;
-        }
-
-        if (new RegExp(M.availability_ipaddress.v6)
-            .test(ipaddresses[i])) {
-            continue;
-        }
-
-        // Test subnet with a regex.
-        if (new RegExp("^(?:".concat(M.availability_ipaddress.v4 + "\\/(3[0-2]|[12]?[0-9])|(1\\*)", ")|(?:")
-            .concat(M.availability_ipaddress.v6 + "\\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])", ")?\\/gm"))
-            .test(ipaddresses[i])) {
-            continue;
-        }
-
-        return false;
     }
 
     return true;
@@ -249,9 +337,8 @@ M.availability_ipaddress.form.fillErrors = function(errors, node) {
     var value = {};
     this.fillValue(value, node);
 
-    // Basic ipaddresses checks - only validate if not empty.
-    if (value.ipaddresses && value.ipaddresses.trim() !== '' &&
-        M.availability_ipaddress.validateIpaddress(value.ipaddresses) === false) {
+    // Basic ipaddresses checks - an empty value is valid.
+    if (M.availability_ipaddress.validateIpaddress(value.ipaddresses) === false) {
         errors.push('availability_ipaddress:error_ipaddress');
     }
 };

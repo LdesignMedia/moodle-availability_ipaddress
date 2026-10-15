@@ -56,11 +56,12 @@ $string['ipaddresses_help'] = 'Enter IP addresses separated by commas. Supports 
 $string['ipaddresses_help_help'] = '<p>Enter one or more IP addresses or ranges, separated by commas.</p>
 <p><strong>Examples:</strong></p>
 <ul>
-    <li><strong>Single IP:</strong> <code>192.168.1.1</code></li>
-    <li><strong>IP range:</strong> <code>192.168.1.1-255</code></li>
-    <li><strong>Subnet:</strong> <code>192.168.1.0/24</code></li>
-    <li><strong>Multiple:</strong> <code>192.168.1.1,10.0.0.0/8,172.16.0.1-255</code></li>
-</ul>';
+    <li><strong>Single IP:</strong> <code>192.168.1.1</code> or <code>2001:db8::1</code></li>
+    <li><strong>IP range:</strong> <code>192.168.1.1-255</code> or <code>2001:db8::1-ff</code></li>
+    <li><strong>Subnet:</strong> <code>192.168.1.0/24</code> or <code>2001:db8::/32</code></li>
+    <li><strong>Multiple:</strong> <code>192.168.1.1, 10.0.0.0/8, 172.16.0.1-255</code></li>
+</ul>
+<p>A range only changes the last part of the address. Use a subnet for an IPv6 network prefix, e.g. <code>2001:db8::/32</code> instead of <code>2001:db8::</code>.</p>';
 $string['enabled'] = 'Enabled';
 $string['sortorder'] = 'Sort order';
 $string['existing_ranges'] = 'Existing IP ranges';

@@ -359,4 +359,141 @@ class helper {
 
         return $modified;
     }
+
+    /**
+     * Validate a comma separated list of IP addresses.
+     *
+     * @param string $ipaddresses Comma separated list of IP addresses.
+     *
+     * @return bool True if every entry is valid.
+     */
+    public static function is_valid_ipaddress_list(string $ipaddresses): bool {
+        foreach (explode(',', $ipaddresses) as $entry) {
+            if (!self::is_valid_ipaddress_entry(trim($entry))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate a single IP address entry.
+     *
+     * Only formats that address_in_subnet() understands are accepted, anything else
+     * would be silently ignored when the restriction is checked.
+     *
+     * - Address: 192.168.1.1 or 2001:db8::1
+     * - Subnet: 192.168.1.0/24 or 2001:db8::/32
+     * - Range in the last group: 192.168.1.1-255 or 2001:db8::1-ff
+     *
+     * @param string $entry A single IP address entry.
+     *
+     * @return bool True if the entry is valid.
+     */
+    public static function is_valid_ipaddress_entry(string $entry): bool {
+        if (strpos($entry, '/') !== false) {
+            $valid = self::is_valid_subnet($entry);
+        } else if (strpos($entry, '-') !== false) {
+            $valid = self::is_valid_range($entry);
+        } else {
+            // An address ending in ":" is treated as an incomplete prefix by address_in_subnet(), which fails to parse it.
+            $valid = self::is_ipv4($entry) || (self::is_ipv6($entry) && substr($entry, -1) !== ':');
+        }
+
+        // Safety net: the entry must match its own start address, so address_in_subnet() is able to parse it.
+        return $valid && address_in_subnet(preg_split('/[\/-]/', $entry)[0], $entry, true);
+    }
+
+    /**
+     * Check if a value is a valid IPv4 address.
+     *
+     * @param string $value The value to check.
+     *
+     * @return bool True if the value is a valid IPv4 address.
+     */
+    private static function is_ipv4(string $value): bool {
+        return filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
+    }
+
+    /**
+     * Check if a value is a valid IPv6 address that cleanremoteaddr() can parse.
+     *
+     * cleanremoteaddr() doesn't handle embedded IPv4 notation reliably and only expands "::"
+     * when it replaces at least two groups, or three at the start or end of the address.
+     *
+     * @param string $value The value to check.
+     *
+     * @return bool True if the value is a valid IPv6 address.
+     */
+    private static function is_ipv6(string $value): bool {
+        if (strpos($value, '.') !== false || filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            return false;
+        }
+
+        if (strpos($value, '::') === false) {
+            return true;
+        }
+
+        $groups = count(array_filter(explode(':', $value), 'strlen'));
+        if (strpos($value, '::') === 0 || substr($value, -2) === '::') {
+            return $groups <= 5;
+        }
+
+        return $groups <= 6;
+    }
+
+    /**
+     * Validate a subnet in CIDR notation, e.g. 192.168.1.0/24 or 2001:db8::/32.
+     *
+     * @param string $entry The subnet.
+     *
+     * @return bool True if the subnet is valid.
+     */
+    private static function is_valid_subnet(string $entry): bool {
+        $parts = explode('/', $entry);
+
+        // Moodle's is_number() rejects a mask with leading zeros.
+        if (count($parts) !== 2 || !preg_match('/^(0|[1-9]\d{0,2})$/D', $parts[1])) {
+            return false;
+        }
+
+        [$address, $mask] = $parts;
+        if (self::is_ipv4($address)) {
+            return (int) $mask <= 32;
+        }
+
+        return self::is_ipv6($address) && (int) $mask <= 128;
+    }
+
+    /**
+     * Validate a range in the last group of the address, e.g. 192.168.1.1-255 or 2001:db8::1-ff.
+     *
+     * The end of the range may not be lower than the start, it would never match.
+     *
+     * @param string $entry The range.
+     *
+     * @return bool True if the range is valid.
+     */
+    private static function is_valid_range(string $entry): bool {
+        $parts = explode('-', $entry);
+        if (count($parts) !== 2) {
+            return false;
+        }
+
+        [$start, $end] = $parts;
+        if (self::is_ipv4($start)) {
+            $startgroup = (int) substr(strrchr($start, '.'), 1);
+
+            return preg_match('/^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/D', $end) === 1 && (int) $end >= $startgroup;
+        }
+
+        if (self::is_ipv6($start)) {
+            $startgroup = hexdec(substr(strrchr($start, ':'), 1) ?: '0');
+
+            return preg_match('/^[0-9a-f]{1,4}$/iD', $end) === 1 && hexdec($end) >= $startgroup;
+        }
+
+        return false;
+    }
 }
