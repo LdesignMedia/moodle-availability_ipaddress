@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.3.2 (2026101500)
+- Fixed IP address validation being too permissive https://github.com/LdesignMedia/moodle-availability_ipaddress/issues/2
+  - Invalid entries like `2001:db8::1garbage` or `192.168.1.0/24garbage` are no longer accepted. Moodle silently ignored them, so a "must not" restriction could let blocked users in.
+  - Only formats Moodle can match are accepted. Rejected: IPv6 written with an IPv4 part (`::ffff:192.168.1.1`), an IPv6 prefix without mask (`2001:db8::`, use `2001:db8::/32`), masks with leading zeros (`/024`) and some compressed IPv6 forms Moodle can't parse (`1::2:3:4:5:6:7`).
+  - Predefined IP ranges are now validated with the same rules (subnet mask range, range end).
+  - Spaces after commas are now allowed in the restriction field, e.g. `192.168.1.1, 10.0.0.1`.
+  - Added support for IPv6 ranges in the last group, e.g. `2001:db8::1-ff`.
+  - Note: existing restrictions and predefined ranges are not changed. If one contains an invalid entry, it now shows a validation error the next time it is edited. Entries that were already invalid never matched.
+
 ## 5.3.1 (2026101400)
 - Solved CI tests https://github.com/LdesignMedia/moodle-availability_ipaddress/issues/20 | Thanks @minhduchoang195
 

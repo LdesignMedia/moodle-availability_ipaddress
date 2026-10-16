@@ -25,6 +25,8 @@
 
 namespace availability_ipaddress\form;
 
+use availability_ipaddress\helper;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -102,52 +104,11 @@ class range_form extends \moodleform {
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        // Validate IP addresses.
-        if (!empty($data['ipaddresses'])) {
-            $ipaddresses = explode(',', $data['ipaddresses']);
-            foreach ($ipaddresses as $ip) {
-                $ip = trim($ip);
-                if (!$this->validate_ip_format($ip)) {
-                    $errors['ipaddresses'] = get_string('error_ipaddress', 'availability_ipaddress');
-                    break;
-                }
-            }
+        // Validate IP addresses, the field is required so an empty value is invalid as well.
+        if (!helper::is_valid_ipaddress_list($data['ipaddresses'] ?? '')) {
+            $errors['ipaddresses'] = get_string('error_ipaddress', 'availability_ipaddress');
         }
 
         return $errors;
-    }
-
-    /**
-     * Validate IP address format.
-     *
-     * @param string $ip
-     *
-     * @return bool
-     */
-    private function validate_ip_format(string $ip): bool {
-
-        // Use the same validation logic as the main plugin.
-        // This is a simplified version - you might want to use the same regex as in JS.
-        if (filter_var($ip, FILTER_VALIDATE_IP)) {
-            return true;
-        }
-
-        // Check for CIDR notation.
-        if (strpos($ip, '/') !== false) {
-            [$addr, $mask] = explode('/', $ip);
-            if (filter_var($addr, FILTER_VALIDATE_IP) && is_numeric($mask)) {
-                return true;
-            }
-        }
-
-        // Check for IP range.
-        if (strpos($ip, '-') !== false) {
-            [$start, $end] = explode('-', $ip);
-            if (filter_var($start, FILTER_VALIDATE_IP)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
